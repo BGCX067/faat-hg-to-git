@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace Faat.Core
+namespace Faat.Contract
 {
 	public interface IPage
 	{
@@ -11,6 +10,7 @@ namespace Faat.Core
 		ICollection<IPage> Parents { get; }
 		ICollection<IPage> Links { get; }
 
+		string Identity { get; set; }
 		string Name { get; set; }
 		string Content { get; set; }
 	}

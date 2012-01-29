@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 
+using Faat.Contract;
 using Faat.Core;
 
 namespace Faat.Host
@@ -34,6 +35,8 @@ namespace Faat.Host
 			get { return _links; }
 		}
 
+		public string Identity { get; set; }
+
 		public string Name { get; set; }
 		public string Content { get; set; }
 	}
@@ -44,11 +47,13 @@ namespace Faat.Host
 
 		readonly T _owner;
 		readonly Func<T, ICollection<T>> _oppositeList;
+		readonly Action _altered;
 
-		public SyncOppositeList(T owner, Func<T, ICollection<T>> oppositeList)
+		public SyncOppositeList(T owner, Func<T, ICollection<T>> oppositeList, Action altered = null)
 		{
 			_owner = owner;
 			_oppositeList = oppositeList;
+			_altered = altered ?? delegate { };
 		}
 
 		public IEnumerator<T> GetEnumerator()
@@ -64,11 +69,13 @@ namespace Faat.Host
 		void AddAspect(T item)
 		{
 			_oppositeList(item).Add(_owner);
+			_altered();
 		}
 
 		void RemoveAspect(T item)
 		{
 			_oppositeList(item).Remove(_owner);
+			_altered();
 		}
 
 		public void Add(T item)

@@ -1,0 +1,10 @@
+﻿<Window x:Class="Faat.UserInterface.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:UserInterface="clr-namespace:Faat.UserInterface"
+        Title="MainWindow" Height="350" Width="525">
+    <Grid>
+		<UserInterface:PageBrowser>
+			
+		</UserInterface:PageBrowser>
+	</Grid>
+</Window>

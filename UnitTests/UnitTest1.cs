@@ -4,6 +4,7 @@ using System.Text;
 using System.Collections.Generic;
 using System.Linq;
 
+using Faat.Contract;
 using Faat.Core;
 using Faat.Host;
 

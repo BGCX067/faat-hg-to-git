@@ -2,7 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System;
 
-namespace Faat.Common
+namespace Faat
 {
 	public static class Cache
 	{
