@@ -1,41 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
-using Faat.Contract;
+using Faat.Client.FaatServiceReference;
+using Faat.Storage;
+using Faat.Storage.Remote;
 
 namespace Faat.UserInterface
 {
 	class PageBrowserViewModel : ObservableObject
 	{
-		Guid _identity;
+		string _identity = default(Guid).ToString("N");
 
 		public string PageIdentity
 		{
-			get { return _identity.ToString("N"); }
+			get { return _identity; }
 			set
 			{
-				_identity = new Guid(value);
+				_identity = value;
+				OnPropertyChanged("PageIdentity");
 			}
 		}
 
 		public string PageName
 		{
-			
+			get
+			{
+				return Page.Name;
+			}
+			set
+			{
+				Page.Name = value;
+				OnPropertyChanged("PageName");
+			}
 		}
 
 		IPage Page
 		{
 			get
 			{
-				return 
+				return _storage.GetPage(PageIdentity);
 			}
 		}
 
+		readonly IStorage _storage;
+
 		public PageBrowserViewModel()
 		{
-			
+			_storage = new RemoteStorage(new FaatServiceClient());
+		}
+
+		void NavigateTo(string identity)
+		{
+			_identity = identity;
+			OnPropertyChanged(null);
 		}
 	}
 }

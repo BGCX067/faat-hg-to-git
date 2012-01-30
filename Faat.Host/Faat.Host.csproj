@@ -33,27 +33,12 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FaatServer.cs" />
-    <Compile Include="FilePage.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RamPage.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Faat.Common\Faat.Common.csproj">
-      <Project>{4B27DF88-CFFB-4441-B586-D89C58ACB494}</Project>
-      <Name>Faat.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Faat.Contract\Faat.Contract.csproj">
-      <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
-      <Name>Faat.Contract</Name>
-    </ProjectReference>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
-namespace Faat.Client
+namespace Faat.Service
 {
 	public class Class1
 	{

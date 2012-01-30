@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</ProjectGuid>
+    <ProjectGuid>{496B7635-2896-4B83-85E5-9C2DC06AB312}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Faat</RootNamespace>
-    <AssemblyName>Faat.Contract</AssemblyName>
+    <RootNamespace>Faat.Storage.Remote</RootNamespace>
+    <AssemblyName>Faat.Storage.Remote</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,12 +31,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MyUtils4">
+      <HintPath>..\_components\MyUtils4.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPage.cs" />
-    <Compile Include="RefreshType.cs" />
+    <Compile Include="RemoteStorage.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Faat.Client\Faat.Client.csproj">
+      <Project>{A1DA6780-73AA-4F3E-AFE2-A3105A8C64C8}</Project>
+      <Name>Faat.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Contract\Faat.Contract.csproj">
+      <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
+      <Name>Faat.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Model\Faat.Model.csproj">
+      <Project>{AE8E6737-BB0D-4119-A721-D51061ED1EF9}</Project>
+      <Name>Faat.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Storage\Faat.Storage %28contract%29.csproj">
+      <Project>{751D3C72-6E0D-4A6F-980E-E1AF7F9103A8}</Project>
+      <Name>Faat.Storage %28contract%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

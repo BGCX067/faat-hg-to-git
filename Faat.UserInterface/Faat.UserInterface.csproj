@@ -37,12 +37,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
@@ -77,9 +74,6 @@
       <DependentUpon>PageBrowser.xaml</DependentUpon>
     </Compile>
     <Compile Include="PageBrowserViewModel.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -94,6 +88,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -101,6 +96,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Faat.Client\Faat.Client.csproj">
+      <Project>{A1DA6780-73AA-4F3E-AFE2-A3105A8C64C8}</Project>
+      <Name>Faat.Client</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Faat.Common\Faat.Common.csproj">
       <Project>{4B27DF88-CFFB-4441-B586-D89C58ACB494}</Project>
       <Name>Faat.Common</Name>
@@ -108,6 +107,14 @@
     <ProjectReference Include="..\Faat.Contract\Faat.Contract.csproj">
       <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
       <Name>Faat.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Storage.Remote\Faat.Storage.Remote.csproj">
+      <Project>{496B7635-2896-4B83-85E5-9C2DC06AB312}</Project>
+      <Name>Faat.Storage.Remote</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Storage\Faat.Storage %28contract%29.csproj">
+      <Project>{751D3C72-6E0D-4A6F-980E-E1AF7F9103A8}</Project>
+      <Name>Faat.Storage %28contract%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

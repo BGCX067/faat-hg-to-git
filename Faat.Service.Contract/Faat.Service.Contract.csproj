@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</ProjectGuid>
+    <ProjectGuid>{12BE8EBE-93E0-45E2-A296-4A01C7A2BFD0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Faat</RootNamespace>
-    <AssemblyName>Faat.Contract</AssemblyName>
+    <RootNamespace>Faat.Service</RootNamespace>
+    <AssemblyName>Faat.Service.Contract</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -33,10 +33,11 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPage.cs" />
-    <Compile Include="RefreshType.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="IFaatService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

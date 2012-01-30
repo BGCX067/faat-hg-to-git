@@ -45,18 +45,31 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="PageFormatTests.cs" />
+    <Compile Include="PageTests.cs" />
+    <Compile Include="RamPageTests.cs" />
+    <Compile Include="FilePageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Faat.Contract\Faat.Contract.csproj">
       <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
       <Name>Faat.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Faat.Host\Faat.Host.csproj">
-      <Project>{65557AC7-73C8-49EB-85E3-14C85D230BBE}</Project>
-      <Name>Faat.Host</Name>
+    <ProjectReference Include="..\Faat.Model\Faat.Model.csproj">
+      <Project>{AE8E6737-BB0D-4119-A721-D51061ED1EF9}</Project>
+      <Name>Faat.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Faat.Storage.FileSystem\Faat.Storage.FileSystem.csproj">
+      <Project>{28695D9C-77F1-4510-A177-902F3701A4E6}</Project>
+      <Name>Faat.Storage.FileSystem</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Storage\Faat.Storage %28contract%29.csproj">
+      <Project>{751D3C72-6E0D-4A6F-980E-E1AF7F9103A8}</Project>
+      <Name>Faat.Storage %28contract%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

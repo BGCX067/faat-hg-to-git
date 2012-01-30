@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</ProjectGuid>
+    <ProjectGuid>{AE8E6737-BB0D-4119-A721-D51061ED1EF9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Faat</RootNamespace>
-    <AssemblyName>Faat.Contract</AssemblyName>
+    <RootNamespace>Faat.Model</RootNamespace>
+    <AssemblyName>Faat.Model</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,8 +35,24 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IPage.cs" />
-    <Compile Include="RefreshType.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="RamPage.cs" />
+    <Compile Include="StringPage.cs" />
+    <Compile Include="SyncOppositeList.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Faat.Common\Faat.Common.csproj">
+      <Project>{4B27DF88-CFFB-4441-B586-D89C58ACB494}</Project>
+      <Name>Faat.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Contract\Faat.Contract.csproj">
+      <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
+      <Name>Faat.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Storage\Faat.Storage %28contract%29.csproj">
+      <Project>{751D3C72-6E0D-4A6F-980E-E1AF7F9103A8}</Project>
+      <Name>Faat.Storage %28contract%29</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />
