@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="Faat.UserInterface.Navigation"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:UserInterface="clr-namespace:Faat.UserInterface" mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+	<UserControl.Resources>
+		<HierarchicalDataTemplate DataType='{x:Type UserInterface:PageViewModel}' ItemsSource='{Binding Children}'>
+			<StackPanel Orientation='Horizontal' Name='st'>
+				<Image Source='Resources\cube16.png' />
+				<Image Source='Resources\CopyHS.png' Visibility='{Binding IsCopied, Converter={StaticResource btv}}' ToolTip='This item is in clipboard' />
+				<Image Source='Resources\CutHS.png' Visibility='{Binding IsCutted, Converter={StaticResource btv}}' ToolTip='This item is in clipboard and going to be removed from here after paste' />
+				<Ellipse Name='State' Width='{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}' Visibility='{Binding HasExecutionResult, Converter={StaticResource btv}}'>
+				</Ellipse>
+				<TextBlock Text='{Binding Page.Name}' />
+				<StackPanel.ContextMenu>
+					<ContextMenu>
+						<MenuItem Header='Create' Command='{MethodBinding CreateChildPage}' Style='{StaticResource collapsableMenu}' />
+						<MenuItem Header='Cut' Command='{MethodBinding Cut}'>
+							<MenuItem.Icon>
+								<Image Source='Resources\CutHS.png' />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header='Copy' Command='{MethodBinding Copy}'>
+							<MenuItem.Icon>
+								<Image Source='Resources\CopyHS.png' />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header='Paste' Command='{MethodBinding PasteChild}' Style='{StaticResource grayableMenu}'>
+							<MenuItem.Icon>
+								<Image Source='Resources\PasteHS.png' />
+							</MenuItem.Icon>
+						</MenuItem>
+						<MenuItem Header='Remove' Command='{MethodBinding Remove}' Style='{StaticResource collapsableMenu}' />
+						<MenuItem Header='Recycle' Command='{MethodBinding Recycle}' Style='{StaticResource collapsableMenu}' />
+						<MenuItem Header='Delete' Command='{MethodBinding DeletePermanently}' Style='{StaticResource collapsableMenu}' />
+					</ContextMenu>
+				</StackPanel.ContextMenu>
+			</StackPanel>
+			<HierarchicalDataTemplate.Triggers>
+				<DataTrigger Binding='{Binding ExecutionResult}' Value='Passed'>
+					<Setter TargetName='State' Property='Fill'>
+						<Setter.Value>
+							<RadialGradientBrush>
+								<GradientStop Color='#FF00BB00' />
+								<GradientStop Color='#4400BB00' Offset='1' />
+							</RadialGradientBrush>
+						</Setter.Value>
+					</Setter>
+				</DataTrigger>
+			</HierarchicalDataTemplate.Triggers>
+		</HierarchicalDataTemplate>
+	</UserControl.Resources>
+    <Grid>
+		<TreeView ItemsSource='{Binding RootPages}' SelectedItemChanged='TreeViewSelectedItemChanged' Style='{StaticResource Navi}' PreviewMouseRightButtonDown='TreeView_PreviewMouseRightButtonDown' x:Name='tv'>
+			
+		</TreeView>
+	</Grid>
+</UserControl>

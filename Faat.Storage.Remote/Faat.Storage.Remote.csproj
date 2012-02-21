@@ -37,6 +37,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="XTrace4, Version=1.2.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="RemoteStorage.cs" />
@@ -45,6 +46,10 @@
     <ProjectReference Include="..\Faat.Client\Faat.Client.csproj">
       <Project>{A1DA6780-73AA-4F3E-AFE2-A3105A8C64C8}</Project>
       <Name>Faat.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Common\Faat.Common.csproj">
+      <Project>{4B27DF88-CFFB-4441-B586-D89C58ACB494}</Project>
+      <Name>Faat.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\Faat.Contract\Faat.Contract.csproj">
       <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>

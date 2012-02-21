@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Faat.Client
 {
-	public class Class1
+	class Class1
 	{
 	}
 }

@@ -33,7 +33,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
@@ -48,11 +50,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Service References\FaatServiceReference\service.wsdl" />
-    <None Include="Service References\FaatServiceReference\service.xsd">
+    <None Include="Service References\FaatServiceReference\service1.wsdl" />
+    <None Include="Service References\FaatServiceReference\service2.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\FaatServiceReference\service1.xsd">
+    <None Include="Service References\FaatServiceReference\service21.xsd">
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>

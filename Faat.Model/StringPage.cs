@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Collections.Generic;
 using System;
@@ -6,9 +7,11 @@ using System.Text;
 
 using Faat.Storage;
 
+using MyUtils;
+
 namespace Faat.Model
 {
-	public class StringPage : IPage
+	public class StringPage : ObservableObject, IPage
 	{
 		readonly IStorage _storage;
 		readonly string _identity;
@@ -38,9 +41,9 @@ namespace Faat.Model
 			get
 			{
 				Dictionary<string, IPage> map;
-				if (!_debugInstantiated.TryGetValue(_storage, out map))
+				if (!_debugInstantiated.TryGetValue(Storage, out map))
 				{
-					_debugInstantiated[_storage] = map = new Dictionary<string, IPage>();
+					_debugInstantiated[Storage] = map = new Dictionary<string, IPage>();
 				}
 				return map;
 			}
@@ -56,10 +59,10 @@ namespace Faat.Model
 
 		public StringPage(IStorage storage, string identity = null)
 		{
-			if (storage == null)
-			{
-				throw new ArgumentNullException("storage");
-			}
+//			if (storage == null)
+//			{
+//				throw new ArgumentNullException("storage");
+//			}
 			_storage = storage;
 			_identity = identity ?? Guid.NewGuid().ToString("N");
 
@@ -81,29 +84,31 @@ namespace Faat.Model
 				Write();
 			}));
 
-			if (identity != null)
-			{
-				Load();
-			}
-			else
+			if (identity == null || !Load())
 			{
 				_name = "New Page";
 			}
 		}
 
-		public void Load()
+		public bool Load()
 		{
-			Load(_storage.GetPageData(Identity));
+			return Load(Storage.GetData(Identity));
 		}
 
-		public void Load(string pageData)
+		public bool Load(string pageData)
 		{
+			if (string.IsNullOrWhiteSpace(pageData))
+			{
+				return false;
+			}
 			int pos = 0;
 			_name = ReadLine(ref pageData, ref pos);
 			_childrenLine = ReadLine(ref pageData, ref pos);
 			_parentsLine = ReadLine(ref pageData, ref pos);
 			_linksLine = ReadLine(ref pageData, ref pos);
 			_content = ReadToEnd(ref pageData, ref pos);
+			OnPropertyChanged(null);
+			return true;
 		}
 
 		static string WriteList(IEnumerable<IPage> pageCollection)
@@ -113,13 +118,10 @@ namespace Faat.Model
 
 		SyncOppositeList<IPage> ReadList(string line, Func<IPage, ICollection<IPage>> oppositeList, Action altered)
 		{
-			var list = new SyncOppositeList<IPage>(this, oppositeList, altered);
-			var pages = (line??"").Split(new[] {'|'}, StringSplitOptions.RemoveEmptyEntries);
-			foreach (var page in pages)
-			{
-				list.Add(_storage.GetPage(page));
-			}
-			return list;
+			var pagesIds = (line??"").Split(new[] {'|'}, StringSplitOptions.RemoveEmptyEntries);
+			var pages = pagesIds.Select(x => Storage.GetPage(x)).ToArray();
+
+			return new SyncOppositeList<IPage>(this, oppositeList, altered, pages);
 		}
 
 		string _childrenLine;
@@ -157,6 +159,7 @@ namespace Faat.Model
 			set
 			{
 				_name = value;
+				OnPropertyChanged("Name");
 				Write();
 			}
 		}
@@ -167,29 +170,44 @@ namespace Faat.Model
 			set
 			{
 				_content = value;
+				OnPropertyChanged("Content");
 				Write();
 			}
 		}
 
+		public IStorage Storage
+		{
+			get { return _storage; }
+		}
+
 		void Write()
 		{
-			_storage.SetPageData(_identity, Serialize());
+			Storage.SetData(_identity, Serialize());
 		}
 
 		public string Serialize()
 		{
+			return SerializeStatic(Name, Content, _childrenLine, _parentsLine, _linksLine);
+		}
+
+		public static string SerializeStatic(string name, string content, string childrens = null, string parents = null, string links = null)
+		{
 			var sb = new StringBuilder();
-			sb.AppendLine(Name);
-			sb.AppendLine(_childrenLine);
-			sb.AppendLine(_parentsLine);
-			sb.AppendLine(_linksLine);
-			sb.AppendLine(Content);
+			sb.AppendLine(name);
+			sb.AppendLine(childrens);
+			sb.AppendLine(parents);
+			sb.AppendLine(links);
+			sb.Append(content);
+			if (content == null || !content.EndsWith(Environment.NewLine))
+			{
+				sb.AppendLine();
+			}
 			return sb.ToString();
 		}
 
 		public override string ToString()
 		{
-			return Name;
+			return "P: " + Name + " #" + Identity.Take(5).Select(x => x.ToString(CultureInfo.InvariantCulture)).Join("");
 		}
 	}
 }

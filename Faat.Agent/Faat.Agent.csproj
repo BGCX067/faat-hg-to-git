@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{703B6917-1705-497E-8752-33F12C7ABDF6}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Faat.Agent</RootNamespace>
+    <AssemblyName>Faat.Agent</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MyUtils4">
+      <HintPath>..\_components\MyUtils4.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="XTrace4, Version=1.2.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Class1.cs" />
+    <Compile Include="FaatAgent.cs" />
+    <Compile Include="FaatAgentExecutor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Faat.Client\Faat.Client.csproj">
+      <Project>{A1DA6780-73AA-4F3E-AFE2-A3105A8C64C8}</Project>
+      <Name>Faat.Client</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Common\Faat.Common.csproj">
+      <Project>{4B27DF88-CFFB-4441-B586-D89C58ACB494}</Project>
+      <Name>Faat.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Contract\Faat.Contract.csproj">
+      <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
+      <Name>Faat.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Parser\Faat.Parser.csproj">
+      <Project>{A8F2AB8E-3953-4394-A249-5AD6F3F7B20D}</Project>
+      <Name>Faat.Parser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Storage.Remote\Faat.Storage.Remote.csproj">
+      <Project>{496B7635-2896-4B83-85E5-9C2DC06AB312}</Project>
+      <Name>Faat.Storage.Remote</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Storage\Faat.Storage %28contract%29.csproj">
+      <Project>{751D3C72-6E0D-4A6F-980E-E1AF7F9103A8}</Project>
+      <Name>Faat.Storage %28contract%29</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

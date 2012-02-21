@@ -1,10 +1,97 @@
-﻿<Window x:Class="Faat.UserInterface.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:UserInterface="clr-namespace:Faat.UserInterface"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-		<UserInterface:PageBrowser>
-			
+﻿<Window
+	x:Class="Faat.UserInterface.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:UserInterface="clr-namespace:Faat.UserInterface"
+	Title="Faat Browser"
+	Name='this'
+	ResizeMode='CanResizeWithGrip' Height="600" Width="800">
+	<Window.Resources>
+		<Color x:Key='global_bg0'>#DDDDDD</Color> <!--// 0-->
+		<Color x:Key='global_bg1'>#DDDDC0</Color> <!--// RGb // 1b-->
+		<Color x:Key='global_bg2'>#DDC0C0</Color> <!--// Rgb // 2 r-->
+		<Color x:Key='global_bg3'>#DDC0DD</Color> <!--// RgB // 1g-->
+		<Color x:Key='global_bg4'>#C0C0DD</Color> <!--// rgB  // 2 b-->
+		<Color x:Key='global_bg5'>#C0DDDD</Color> <!--// rGB // 1 r-->
+		<Color x:Key='global_bg6'>#C0DDC0</Color> <!--// rGb // 2 g-->
+		<Color x:Key='global_bg7'>#C0C0C0</Color> <!--// 3-->
+
+		<LinearGradientBrush StartPoint='0 0' EndPoint='1 0' x:Key='global_BrushLeft' x:Name='gs_global_1'>
+			<GradientStop Offset='0' Color='#FFFFFF' />
+			<GradientStop Offset='1' Color='Transparent' />
+		</LinearGradientBrush>
+		<LinearGradientBrush StartPoint='1 0' EndPoint='0 0' x:Key='global_BrushRight' x:Name='gs_global_2'>
+			<GradientStop Offset='0' Color='#FFFFFF' />
+			<GradientStop Offset='1' Color='Transparent' />
+		</LinearGradientBrush>
+		<Storyboard x:Key='global_BackgroundAnimation' RepeatBehavior='Forever' Storyboard.TargetName='this'  Storyboard.TargetProperty='(Control.Background).Color' >
+			<ColorAnimationUsingKeyFrames Duration='00:10:00' >
+				<LinearColorKeyFrame Value='{StaticResource global_bg1}' />
+				<LinearColorKeyFrame Value='{StaticResource global_bg2}' />
+				<LinearColorKeyFrame Value='{StaticResource global_bg3}' />
+				<LinearColorKeyFrame Value='{StaticResource global_bg4}' />
+				<LinearColorKeyFrame Value='{StaticResource global_bg5}' />
+				<LinearColorKeyFrame Value='{StaticResource global_bg6}' />
+				<LinearColorKeyFrame Value='{StaticResource global_bg7}' />
+				<LinearColorKeyFrame Value='{StaticResource global_bg0}' />
+				<LinearColorKeyFrame Value='{StaticResource global_bg1}' />
+			</ColorAnimationUsingKeyFrames>
+		</Storyboard>
+	</Window.Resources>
+	<Window.Background>
+		<SolidColorBrush Color='{StaticResource global_bg1}'>
+		</SolidColorBrush>
+	</Window.Background>
+
+	<Window.CommandBindings>
+		<CommandBinding Command='{x:Static UserInterface:MyNavigationCommands.ToggleCurrentView}' Executed='ToggleCurrentView_Executed' />
+	</Window.CommandBindings>
+	<Grid>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition />
+			<ColumnDefinition Width='Auto' />
+			<ColumnDefinition Width='3*' />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height='Auto' />
+			<RowDefinition />
+		</Grid.RowDefinitions>
+<!--		<StackPanel Orientation='Horizontal'>-->
+<!--			<Button Command='{x:Static UserInterface:MyNavigationCommands.ToggleCurrentView}'>-->
+<!--				Toggle View-->
+<!--			</Button>-->
+<!--		</StackPanel>-->
+
+		<UserInterface:Navigation Grid.Row='1' Grid.Column='0' x:Name='navi' Background='{StaticResource global_BrushLeft}'>
+		</UserInterface:Navigation>
+		<GridSplitter Grid.Row='1' Grid.Column='1' HorizontalAlignment='Stretch' />
+		<UserInterface:PageBrowser Grid.Row='1' Grid.Column='2' DataContext='{Binding CurrentPage}' x:Name='page' Background='{StaticResource global_BrushRight}'>
 		</UserInterface:PageBrowser>
+
+		<Border Visibility='{Binding IsNotConnected, Converter={StaticResource btv}}' Grid.ColumnSpan='99' Grid.RowSpan='99' DataContext='{Binding Connection}'>
+			<Border.Background>
+				<LinearGradientBrush EndPoint='0 1'>
+					<GradientStop Color='#BB444444' />
+					<GradientStop Color='#BB000000' Offset='1' />
+				</LinearGradientBrush>
+			</Border.Background>
+			<Grid HorizontalAlignment='Center' VerticalAlignment='Center'>
+				<Grid.RowDefinitions>
+					<RowDefinition />
+					<RowDefinition />
+					<RowDefinition />
+				</Grid.RowDefinitions>
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width='Auto' MinWidth='200' />
+					<ColumnDefinition Width='Auto' />
+				</Grid.ColumnDefinitions>
+				<TextBlock TextAlignment='Center' Grid.ColumnSpan='99' FontSize='16' Foreground='White'>Connect to server:</TextBlock>
+				<TextBox IsEnabled='{Binding IsNotConnecting}' Grid.Row='1' Margin='5 0' Grid.Column='0' Text='{Binding ServerAddress}' />
+				<Button Grid.Row='1' Grid.Column='1' Name='b' Margin='0 0 5 0' Content='Connect' Command='{MethodBinding Connect}' />
+				<ProgressBar Grid.Row='2' Grid.ColumnSpan='99' Height='{Binding ActualHeight, ElementName=b}' Margin='5' IsIndeterminate='True' Visibility='{Binding IsConnecting, Converter={StaticResource btvh}}'>
+					
+				</ProgressBar>
+			</Grid>
+		</Border>
 	</Grid>
 </Window>

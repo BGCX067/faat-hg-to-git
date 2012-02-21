@@ -36,6 +36,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GrayscaleEffect">
+      <HintPath>..\_components\GrayscaleEffect.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.AvalonEdit">
+      <HintPath>..\_components\ICSharpCode.AvalonEdit.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MySpring4">
+      <HintPath>..\_components\MySpring4.dll</HintPath>
+    </Reference>
+    <Reference Include="MyUtils4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\_components\MyUtils4.dll</HintPath>
+    </Reference>
+    <Reference Include="Obtics">
+      <HintPath>..\_components\Obtics\Obtics.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml" />
@@ -46,12 +63,19 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="XTrace4">
+      <HintPath>..\_components\XTrace4.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="LogOn.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -60,20 +84,40 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BtvConverter.cs" />
+    <Compile Include="ConnectionViewModel.cs" />
+    <Compile Include="LogOn.xaml.cs">
+      <DependentUpon>LogOn.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Navigation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="PageBrowser.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProjectSelection.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MainWindowContext.cs" />
+    <Compile Include="Navigation.xaml.cs">
+      <DependentUpon>Navigation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="PageBrowser.xaml.cs">
       <DependentUpon>PageBrowser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PageBrowserViewModel.cs" />
+    <Compile Include="PageViewModel.cs" />
+    <Compile Include="ProjectSelection.xaml.cs">
+      <DependentUpon>ProjectSelection.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -88,7 +132,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="App.config" />
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -96,6 +140,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Faat.Agent\Faat.Agent.csproj">
+      <Project>{703B6917-1705-497E-8752-33F12C7ABDF6}</Project>
+      <Name>Faat.Agent</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Faat.Client\Faat.Client.csproj">
       <Project>{A1DA6780-73AA-4F3E-AFE2-A3105A8C64C8}</Project>
       <Name>Faat.Client</Name>
@@ -108,6 +156,14 @@
       <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
       <Name>Faat.Contract</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Faat.Model\Faat.Model.csproj">
+      <Project>{AE8E6737-BB0D-4119-A721-D51061ED1EF9}</Project>
+      <Name>Faat.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Parser\Faat.Parser.csproj">
+      <Project>{A8F2AB8E-3953-4394-A249-5AD6F3F7B20D}</Project>
+      <Name>Faat.Parser</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Faat.Storage.Remote\Faat.Storage.Remote.csproj">
       <Project>{496B7635-2896-4B83-85E5-9C2DC06AB312}</Project>
       <Name>Faat.Storage.Remote</Name>
@@ -116,6 +172,17 @@
       <Project>{751D3C72-6E0D-4A6F-980E-E1AF7F9103A8}</Project>
       <Name>Faat.Storage %28contract%29</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\CopyHS.png" />
+    <Resource Include="Resources\CutHS.png" />
+    <Resource Include="Resources\PasteHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\cube16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Run.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

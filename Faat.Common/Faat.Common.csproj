@@ -31,11 +31,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="MyUtils4">
+      <HintPath>..\_components\MyUtils4.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="XTrace4">
+      <HintPath>..\_components\XTrace4.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cache.cs" />
+    <Compile Include="Const.cs" />
+    <Compile Include="IValueProvider.cs" />
+    <Compile Include="MethodBinding.cs" />
     <Compile Include="ObservableObject.cs" />
   </ItemGroup>
   <ItemGroup>

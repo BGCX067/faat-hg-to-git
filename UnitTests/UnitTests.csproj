@@ -34,10 +34,15 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="MyUtils4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="XTrace4, Version=1.2.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
@@ -45,12 +50,24 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Executor\AgentTests.cs" />
+    <Compile Include="Executor\MyFixture.cs" />
     <Compile Include="PageFormatTests.cs" />
-    <Compile Include="PageTests.cs" />
-    <Compile Include="RamPageTests.cs" />
-    <Compile Include="FilePageTests.cs" />
+    <Compile Include="PageAtStorageTests.cs" />
+    <Compile Include="PageAtRamStorageTests.cs" />
+    <Compile Include="PageAtFileStorageTests.cs" />
+    <Compile Include="Parser\BasicTokensParsing.cs" />
+    <Compile Include="Parser\TokenizeByLine.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Faat.Agent\Faat.Agent.csproj">
+      <Project>{703B6917-1705-497E-8752-33F12C7ABDF6}</Project>
+      <Name>Faat.Agent</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Common\Faat.Common.csproj">
+      <Project>{4B27DF88-CFFB-4441-B586-D89C58ACB494}</Project>
+      <Name>Faat.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Faat.Contract\Faat.Contract.csproj">
       <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
       <Name>Faat.Contract</Name>
@@ -58,6 +75,10 @@
     <ProjectReference Include="..\Faat.Model\Faat.Model.csproj">
       <Project>{AE8E6737-BB0D-4119-A721-D51061ED1EF9}</Project>
       <Name>Faat.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Parser\Faat.Parser.csproj">
+      <Project>{A8F2AB8E-3953-4394-A249-5AD6F3F7B20D}</Project>
+      <Name>Faat.Parser</Name>
     </ProjectReference>
     <ProjectReference Include="..\Faat.Storage.FileSystem\Faat.Storage.FileSystem.csproj">
       <Project>{28695D9C-77F1-4510-A177-902F3701A4E6}</Project>

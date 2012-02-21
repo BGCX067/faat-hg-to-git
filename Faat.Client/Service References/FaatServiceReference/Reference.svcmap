@@ -18,12 +18,12 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost/Design_Time_Addresses/FaatTest/mex" Protocol="mex" SourceId="1" />
+    <MetadataSource Address="http://localhost/Faat/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="551efa98-0571-40e9-b689-8aea75760173" SourceId="1" SourceUrl="http://localhost/Design_Time_Addresses/FaatTest/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="66a9d19a-fcbf-452d-9779-35c76e2d5936" SourceId="1" SourceUrl="http://localhost/Design_Time_Addresses/FaatTest/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="8d65edb8-5a69-4186-9495-9a0bc800c660" SourceId="1" SourceUrl="http://localhost/Design_Time_Addresses/FaatTest/mex" />
+    <MetadataFile FileName="service1.wsdl" MetadataType="Wsdl" ID="0ba56d8d-d3ba-4772-8424-c98fbdff3d66" SourceId="1" SourceUrl="http://localhost/Faat/mex" />
+    <MetadataFile FileName="service2.xsd" MetadataType="Schema" ID="da37d844-e030-4852-a7ed-235cf62f0963" SourceId="1" SourceUrl="http://localhost/Faat/mex" />
+    <MetadataFile FileName="service21.xsd" MetadataType="Schema" ID="62f22dcb-8453-4447-9b69-bcbb9c6329ab" SourceId="1" SourceUrl="http://localhost/Faat/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

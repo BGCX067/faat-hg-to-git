@@ -74,7 +74,7 @@ namespace Faat
 
 		public static implicit operator T(Cache<T> cache)
 		{
-			return cache.Value;
+			return cache == null ? default(T) : cache.Value;
 		}
 	}
 }
