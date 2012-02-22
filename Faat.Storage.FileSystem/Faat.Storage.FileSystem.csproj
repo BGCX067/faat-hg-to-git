@@ -31,7 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MySpring4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL" />
+    <Reference Include="MySpring4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL">
+      <HintPath>..\_components\MySpring4.dll</HintPath>
+    </Reference>
     <Reference Include="MyUtils4">
       <HintPath>..\_components\MyUtils4.dll</HintPath>
     </Reference>

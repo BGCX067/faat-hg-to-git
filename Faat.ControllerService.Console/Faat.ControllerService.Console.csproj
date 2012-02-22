@@ -40,7 +40,9 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
-    <Reference Include="XTrace4, Version=1.2.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL" />
+    <Reference Include="XTrace4, Version=1.2.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL">
+      <HintPath>..\_components\XTrace4.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
