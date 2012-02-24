@@ -63,14 +63,17 @@ namespace Faat.UserInterface
 			ed.Text = (string)ed.DataContext;
 		}
 
-		[DebuggerStepThrough]
+		//[DebuggerStepThrough]
 		private void EditorTextChanged(object sender, EventArgs e)
 		{
 			var ed = (TextEditor)sender;
 			try
 			{
 				XmlFoldingStrategy st = ed.Attached().FoldingStrategy;
-				st.UpdateFoldings(_foldingManager, ed.Document);
+				if (st != null)
+				{
+					st.UpdateFoldings(_foldingManager, ed.Document);
+				}
 			}
 			catch (Exception ex)
 			{
