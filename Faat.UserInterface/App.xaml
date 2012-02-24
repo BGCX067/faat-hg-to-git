@@ -28,12 +28,12 @@
 			<Style TargetType="TreeViewItem">
 				<Style.Resources>
 					<LinearGradientBrush x:Key="{x:Static SystemColors.ControlBrushKey}" EndPoint='0 1'>
-						<GradientStop Color='#AA00FF00' />
-						<GradientStop Offset='1' Color='#AA007700' />
+						<GradientStop Color='#7777AAFF' />
+						<GradientStop Offset='1' Color='#777799BB' />
 					</LinearGradientBrush>
 					<LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint='0 1'>
-						<GradientStop Color='#AA00FF00' />
-						<GradientStop Offset='1' Color='#AA007700' />
+						<GradientStop Color='#7777AAFF' />
+						<GradientStop Offset='1' Color='#777799BB' />
 					</LinearGradientBrush>
 				</Style.Resources>
 				<Style.Triggers>
@@ -101,12 +101,19 @@
 				<Setter Property='FontSize' Value='16' />
 				<Setter Property='FontFamily' Value='Verdana' />
 			</Style>
+			
 			<Style TargetType='TreeView' x:Key='Navi'>
 				<Setter Property='Background' Value='Transparent' />
 				<Setter Property='BorderThickness' Value='0' />
 
 			</Style>
 			<Style TargetType='GridSplitter'>
+				<Setter Property='RenderTransformOrigin' Value='.5 .5' />
+				<Setter Property='RenderTransform'>
+					<Setter.Value>
+						<ScaleTransform CenterX='.5' CenterY='.5' />
+					</Setter.Value>
+				</Setter>
 				<Setter Property='Width' Value='4' />
 				<Setter Property='Background'>
 					<Setter.Value>
@@ -148,6 +155,9 @@
 							<BeginStoryboard>
 								<Storyboard>
 									<DoubleAnimation Storyboard.TargetProperty='Width' To='20' Duration='00:00:00.1' By='1' />
+<!--
+									<DoubleAnimation Storyboard.TargetProperty='RenderTransform.(ScaleTransform.ScaleX)' To='5' Duration='00:00:00.1' By='1' />
+-->
 								</Storyboard>
 							</BeginStoryboard>
 						</Trigger.EnterActions>
@@ -155,6 +165,9 @@
 							<BeginStoryboard>
 								<Storyboard>
 									<DoubleAnimation Storyboard.TargetProperty='Width' To='4' Duration='00:00:00.6' />
+<!--
+									<DoubleAnimation Storyboard.TargetProperty='RenderTransform.(ScaleTransform.ScaleX)' To='1' Duration='00:00:00.6' />
+-->
 								</Storyboard>
 							</BeginStoryboard>
 						</Trigger.ExitActions>

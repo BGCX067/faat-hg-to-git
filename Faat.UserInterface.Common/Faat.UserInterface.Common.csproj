@@ -5,13 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A8F2AB8E-3953-4394-A249-5AD6F3F7B20D}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{9B760184-BF94-4F82-A133-CD4F903402BD}</ProjectGuid>
+    <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Faat.Parser</RootNamespace>
-    <AssemblyName>Faat.Parser</AssemblyName>
+    <RootNamespace>Faat.UserInterface.Common</RootNamespace>
+    <AssemblyName>Faat.UserInterface.Common</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,44 +34,50 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MyUtils4, Version=1.0.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL">
-      <HintPath>..\_components\MyUtils4.dll</HintPath>
+    <Reference Include="ICSharpCode.AvalonEdit">
+      <HintPath>..\_components\ICSharpCode.AvalonEdit.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xaml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="XTrace4">
       <HintPath>..\_components\XTrace4.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Ast\Block.cs" />
-    <Compile Include="Ast\Line.cs" />
-    <Compile Include="PageParser.cs" />
-    <Compile Include="ParsingError.cs" />
-    <Compile Include="ParsingException.cs" />
-    <Compile Include="ParsingReport.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TextLine.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Faat.Common\Faat.Common.csproj">
-      <Project>{4B27DF88-CFFB-4441-B586-D89C58ACB494}</Project>
-      <Name>Faat.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Faat.Contract\Faat.Contract.csproj">
-      <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
-      <Name>Faat.Contract</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Faat.Model\Faat.Model.csproj">
-      <Project>{AE8E6737-BB0D-4119-A721-D51061ED1EF9}</Project>
-      <Name>Faat.Model</Name>
-    </ProjectReference>
+    <Compile Include="BulkTextEditor.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

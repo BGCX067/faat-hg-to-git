@@ -2,10 +2,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using System.Windows;
+
+using Faat.Model;
 
 namespace Faat.Parser.Ast
 {
 	[DefaultProperty("TextLine")]
+	[Serializable]
 	public class Line
 	{
 		[DefaultValue(null)]
@@ -29,6 +33,8 @@ namespace Faat.Parser.Ast
 			return String.GetHashCodeOrNull();
 		}
 
+		[DefaultValue(null)]
+		public ExecutionResultState? ResultState { get; set; }
 	}
 
 	public static class Ext

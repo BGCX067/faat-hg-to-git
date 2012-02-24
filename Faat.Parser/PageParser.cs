@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xaml;
 
 using Faat.Parser.Ast;
 
@@ -11,6 +12,93 @@ using XTrace;
 
 namespace Faat.Parser
 {
+	public class PageParserState : ObservableObject
+	{
+		readonly PageParser _parser = new PageParser();
+		readonly IValueProvider<string> _text;
+		readonly IValueProvider<string> _executionResultXaml;
+
+		public PageParserState(IValueProvider<string> text, IValueProvider<string> executionResultXaml)
+		{
+			_text = text;
+			_executionResultXaml = executionResultXaml;
+		}
+
+		// faat text
+		string _pageParsedSource;
+		Block _pageParsed;
+
+		public Block Page
+		{
+			get
+			{
+				var now = _text.Value;
+				if (_pageParsedSource != now)
+				{
+					if (now != null)
+					{
+						var report = _parser.Tokenize(now);
+						_pageParsed = report.PageTokens;
+					}
+					else
+					{
+						_pageParsed = null;
+					}
+					_pageParsedSource = now;
+				}
+				return _pageParsed;
+			}
+		}
+
+		// xaml
+		string _pageExecutedSource;
+		Block _pageExecuted;
+
+		public Block Executed
+		{
+			get
+			{
+				var txt = _executionResultXaml.Value;
+				if (txt != _pageExecutedSource)
+				{
+					_pageExecutedSource = txt;
+					if (!_pageExecutedSource.IsNullOrWhitespaces())
+					{
+						_pageExecuted = (Block)XamlServices.Parse(_pageExecutedSource);
+					}
+					else
+					{
+						_pageExecuted = null;
+					}
+				}
+				return _pageExecuted;
+			}
+		}
+
+		public Block ExecutedOrSimple
+		{
+			get
+			{
+				var simple = Page;
+				var executed = Executed;
+
+				if (simple != null)
+				{
+					if (executed != null)
+					{
+						// TODO more precise comparison
+						if (executed.GetHashCode() == simple.GetHashCode())
+						{
+							return executed;
+						}
+					}
+					return simple;
+				}
+				return null;
+			}
+		}
+	}
+
 	public class PageParser : IPageParser
 	{
 		public ParsingReport Parse(IPage page)
@@ -29,10 +117,10 @@ namespace Faat.Parser
 		{
 			if (string.IsNullOrWhiteSpace(content))
 			{
-				return Enumerable.Empty<TextLine>();
+				// return Enumerable.Empty<TextLine>();
+				yield break;
 			}
 			// tokenize by line
-			var lines = new List<TextLine>();
 			for (int i = 0; i < content.Length && i > -1;)
 			{
 				var start = i;
@@ -46,13 +134,11 @@ namespace Faat.Parser
 				}
 				if (i == -1)
 				{
-					var line = new TextLine(content.Substring(start), start, content.Length);
-					lines.Add(line);
+					yield return new TextLine(content.Substring(start), start, content.Length);
 				}
 				else
 				{
-					var line = new TextLine(content.Substring(start, i - start), start, i);
-					lines.Add(line);
+					yield return new TextLine(content.Substring(start, i - start), start, i);
 					if (content[i + 1] == '\n')
 					{
 						i++;
@@ -60,19 +146,33 @@ namespace Faat.Parser
 					i++;
 				}
 			}
-			return lines;
 		}
 
 
 		ParsingReport Tokenize(IEnumerable<TextLine> lines)
 		{
+			if (lines == null)
+			{
+				throw new ArgumentNullException("lines");
+			}
+			var linesArray = lines.ToArray();
 			try
 			{
-
 				var ctx = new ParsingContext();
 				var page = ctx.CurrentBlock;
 
-				foreach (var lineToken in lines)
+//				if (linesArray.Any())
+//				{
+//					page.StartOffset = linesArray[0].StartOffset;
+//					page.EndOffset = linesArray[linesArray.Length - 1].EndOffset;
+//				}
+//				else
+				{
+					page.StartOffset = -1;
+					page.EndOffset = -1;
+				}
+
+				foreach (var lineToken in linesArray)
 				{
 					var line = lineToken.String;
 					Trace.Verbose("Parser", "TextLine {0}", line);
@@ -91,11 +191,6 @@ namespace Faat.Parser
 						untabedLine = untabedLine.Substring(0, commentPos).TrimEnd();
 					}
 
-//					if (string.IsNullOrWhiteSpace(untabedLine)) // continue
-//					{
-//						Trace.Verbose("Parser", "Tabulation - continue on empty line");
-//					}
-					//else
 					if (ctx.CurrentTabulating == tabs) // continue
 					{
 						Trace.Verbose("Parser", "Tabulation - continue on same tabulation");
@@ -114,16 +209,18 @@ namespace Faat.Parser
 						Trace.Verbose("Parser", "Tabulation - open one");
 						if (!ctx.PreviousBlockCreatedByColumn)
 						{
-							if (string.IsNullOrWhiteSpace(ctx.PreviousUntabbedLine))
-							{
-								// немогу создать блок по предыдущей строке, т.к. предыдущая строка была пустая
-								throw new ParsingException("Немогу создать блок по предыдущей строке, т.к. предыдущая строка была пустая");
-							}
+//							if (string.IsNullOrWhiteSpace(ctx.PreviousUntabbedLine))
+//							{
+//								// немогу создать блок по предыдущей строке, т.к. предыдущая строка была пустая
+//								throw new ParsingException("Немогу создать блок по предыдущей строке, т.к. предыдущая строка была пустая");
+//							}
 							var parent = ctx.CurrentBlock;
 							ctx.BlockStack.Push(ctx.CurrentBlock);
 							ctx.CurrentBlock = new Block
 							{
 								Name = ctx.PreviousUntabbedLine,
+								StartOffset = ctx.PreviousToken.StartOffset,
+								EndOffset = ctx.PreviousToken.EndOffset,
 							};
 							if (ctx.PreviousLineInserted)
 							{
@@ -160,6 +257,8 @@ namespace Faat.Parser
 						{
 							Name = untabedLine.Substring(0, columnAtEnd),
 							Param = string.IsNullOrWhiteSpace(param) ? null : param,
+							StartOffset = lineToken.StartOffset,
+							EndOffset = lineToken.EndOffset,
 						};
 						ctx.BlockStack.Peek().Lines.Add(ctx.CurrentBlock);
 						ignore = true;
@@ -177,8 +276,8 @@ namespace Faat.Parser
 							{
 								ctx.CurrentBlock = ctx.BlockStack.Pop();
 							}
-							ctx.CurrentTabulating = 0;
 						}
+						ctx.CurrentTabulating = tabs = 0;
 						ignore = true;
 					}
 
@@ -198,6 +297,7 @@ namespace Faat.Parser
 					ctx.CurrentTabulating = tabs;
 					ctx.PreviousLine = line;
 					ctx.PreviousUntabbedLine = untabedLine;
+					ctx.PreviousToken = lineToken;
 					ctx.LineNumber++;
 					ctx.PreviousBlockCreatedByColumn = currentBlockCreatedByColumn;
 				}
@@ -235,6 +335,7 @@ namespace Faat.Parser
 			// bool currentTabulatingBlockOpenedByPreviousColumnLine = false;
 			public string PreviousLine = null;
 			public string PreviousUntabbedLine = null;
+			public TextLine PreviousToken = null;
 			public int LineNumber;
 			public bool PreviousBlockCreatedByColumn;
 			public bool PreviousLineInserted;

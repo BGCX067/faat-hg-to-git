@@ -5,7 +5,8 @@
 	xmlns:UserInterface="clr-namespace:Faat.UserInterface"
 	Title="Faat Browser"
 	Name='this'
-	ResizeMode='CanResizeWithGrip' Height="600" Width="800">
+	WindowState='Maximized'
+	ResizeMode='CanResizeWithGrip' Height="800" Width="1250">
 	<Window.Resources>
 		<Color x:Key='global_bg0'>#DDDDDD</Color> <!--// 0-->
 		<Color x:Key='global_bg1'>#DDDDC0</Color> <!--// RGb // 1b-->
@@ -50,7 +51,7 @@
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition />
 			<ColumnDefinition Width='Auto' />
-			<ColumnDefinition Width='3*' />
+			<ColumnDefinition Width='6*' />
 		</Grid.ColumnDefinitions>
 		<Grid.RowDefinitions>
 			<RowDefinition Height='Auto' />

@@ -12,6 +12,7 @@ namespace Faat.Parser.Ast
 {
 	[DefaultProperty("Lines")]
 	[ContentProperty("Lines")]
+	[Serializable]
 	public class Block : Line
 	{
 		public Block()

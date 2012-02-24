@@ -5,7 +5,14 @@ using System.Text;
 
 namespace Faat.Model
 {
-	public class Class1
+	public enum ExecutionResultState
 	{
+		Unknown,
+		Passed,
+		Failed,
+		Warning,
+		Exception,
+		Timeout,
+		BadTest,
 	}
 }

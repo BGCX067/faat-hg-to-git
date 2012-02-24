@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Windows;
 using System.Windows.Input;
 using System.Xaml;
 
@@ -273,30 +275,13 @@ namespace Faat.UserInterface
 			get { return ParentPage != null && Page.Parents.Contains(ParentPage) && Page.Parents.Count > 1; }
 		}
 
-		public enum ExecutionResultState
+		public ExecutionResultState? ExecutionResult
 		{
-			Unknown,
-			Passed,
-			Failed,
-			Warning,
-			Exception,
-			Timeout,
-			BadTest,
-		}
-
-		ExecutionResultState _executionResult;
-
-		public ExecutionResultState ExecutionResult
-		{
-			get { return _executionResult; }
-			set
+			get
 			{
-				if (_executionResult != value)
-				{
-					_executionResult = value;
-					OnPropertyChanged("ExecutionResult");
-					OnPropertyChanged("HasExecutionResult");
-				}
+				ExecutionResultState state;
+				Enum.TryParse(Storage.GetData(Const.GlobalPageResultSimplePrefix + Page.Identity), out state);
+				return state;
 			}
 		}
 
@@ -304,7 +289,7 @@ namespace Faat.UserInterface
 		{
 			get
 			{
-				return ExecutionResult == ExecutionResultState.Unknown;
+				return ExecutionResult.HasValue && ExecutionResult != ExecutionResultState.Unknown;
 			}
 		}
 
@@ -321,28 +306,45 @@ namespace Faat.UserInterface
 		public void Run()
 		{
 			var ae = new FaatAgentExecutor();
-			ae.RunPage(Storage.Address, Page.Identity, null);
+			var exr = ae.RunPage(Storage.Address, Page.Identity, null/*, Const.GlobalPageResultPrefix + Page.Identity*/);
+			var state = exr.Page.ResultState;
+			// MessageBox.Show(state == null ? "Page state is null" : state.ToString());
+			// todo
 		}
 
 		#endregion
 
-//		public static void Subscribe(IStorage storage)
-//		{
-//			storage.DataChanged -= StorageDataChanged;
-//			storage.DataChanged += StorageDataChanged;
-//		}
-//
-//		static void StorageDataChanged(object sender, DataChangedEventArgs e)
-//		{
-//			var listOfViewModels = _cacheByPage[e.Identity];
-//			if(listOfViewModels != null)
+		public static void Subscribe(IStorage storage)
+		{
+			storage.DataChanged -= StorageDataChanged;
+			storage.DataChanged += StorageDataChanged;
+		}
+
+		static void StorageDataChanged(object sender, DataChangedEventArgs e)
+		{
+			ForceRefresh(e.Identity);
+
+			if (e.Identity.StartsWith(Const.GlobalPageResultSimplePrefix))
+			{
+				ForceRefresh(e.Identity.Substring(Const.GlobalPageResultSimplePrefix.Length));
+			}
+//			else if (e.Identity.StartsWith(Const.GlobalPageResultSimplePrefix))
 //			{
-//				foreach (var page in listOfViewModels.Entries.Select(x => x.Value))
-//				{
-//					page.OnPropertyChanged(null); // page content is updated on server
-//				}
+//				ForceRefresh(e.Identity.Substring(Const.GlobalPageResultSimplePrefix.Length));
 //			}
-//		}
+		}
+
+		static void ForceRefresh(string identity)
+		{
+			var listOfViewModels = _cacheByPage[identity];
+			if (listOfViewModels != null)
+			{
+				foreach (var page in listOfViewModels.Entries.Select(x => x.Value))
+				{
+					page.OnPropertyChanged(null); // page content is updated on server
+				}
+			}
+		}
 	}
 
 	public static partial class Ext

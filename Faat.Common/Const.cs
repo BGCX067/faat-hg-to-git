@@ -22,7 +22,15 @@ namespace Faat
 		/// </summary>
 		public static string RecycleBinPage = new Guid("{AAA0B7F5-B621-412B-AF8B-9C2EEF647C1D}").ToString("N");
 
+		/// <summary>
+		/// Prefix for page identifier by witch page execution result is stored (Block page xaml with parsed and stated elements)
+		/// </summary>
+		public static string GlobalPageResultGraphPrefix = "ResultGraph_";
 
+		/// <summary>
+		/// Prefix for page identifier by witch page execution result is stored (ExecutionResultState enum value)
+		/// </summary>
+		public static string GlobalPageResultSimplePrefix = "ResultSimple_";
 	}
 
 }
