@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Faat.UserInterface.Properties {
+namespace Faat.ControllerService.Console.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
@@ -23,15 +23,12 @@ namespace Faat.UserInterface.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string LastServerAddress {
+        public string StoragePath {
             get {
-                return ((string)(this["LastServerAddress"]));
-            }
-            set {
-                this["LastServerAddress"] = value;
+                return ((string)(this["StoragePath"]));
             }
         }
     }

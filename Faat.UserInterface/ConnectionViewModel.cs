@@ -8,6 +8,7 @@ using System.Windows.Input;
 
 using Faat.Storage;
 using Faat.Storage.Remote;
+using Faat.UserInterface.Properties;
 
 using MySpring;
 
@@ -81,7 +82,7 @@ namespace Faat.UserInterface
 							State = ConnectionState.Connecting;
 							HandleDisconnect(delegate
 							{
-								SpringContainer.Add<IStorage>(new RemoteStorage());
+								SpringContainer.Add<IStorage>(new RemoteStorage(true, ServerAddress));
 							});
 							VerifyConnection();
 						}
@@ -142,16 +143,15 @@ namespace Faat.UserInterface
 			}
 		}
 
-		string _serverAddress = "localhost";
-
 		public string ServerAddress
 		{
-			get { return _serverAddress; }
+			get { return Settings.Default.LastServerAddress.IsNullOrWhitespaces() ? null : Settings.Default.LastServerAddress; } // null allows app config usage
 			set
 			{
-				if (_serverAddress != value)
+				if (Settings.Default.LastServerAddress != value)
 				{
-					_serverAddress = value;
+					Settings.Default.LastServerAddress = value;
+					Settings.Default.Save();
 					OnPropertyChanged("ServerAddress");
 				}
 			}

@@ -13,10 +13,16 @@ namespace Faat.Storage.FileSystem
 {
 	public class FileSystemStorage : IStorage, IDisposable
 	{
+		static string GetDefaultPath()
+		{
+			return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Faat", "ServerRepo");
+		}
+
 		readonly DirectoryInfo _dir;
 
 		[DefaultConstructor]
-		public FileSystemStorage():this(new DirectoryInfo(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Faat", "ServerRepo")))
+		public FileSystemStorage(string path = null)
+			: this(new DirectoryInfo(path.IsNullOrWhitespaces() ? GetDefaultPath() : path))
 		{
 		}
 

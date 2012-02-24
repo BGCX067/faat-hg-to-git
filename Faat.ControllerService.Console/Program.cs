@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ServiceModel;
 
+using Faat.ControllerService.Console.Properties;
 using Faat.Storage;
 using Faat.Storage.FileSystem;
 
@@ -14,11 +15,12 @@ namespace Faat.ControllerService.Console
 	{
 		static void Main()
 		{
-			new XTrace.ConsoleXTraceListener();
+			// new XTrace.ConsoleXTraceListener();
 			new XTrace.StructuredTextFileXTraceListener("Faat Server", XTrace.RelativePath.TempFolder);
 
 			var spring = SpringContainer.Root;
-			spring.Add<IStorage, FileSystemStorage>();
+			spring.Add<IStorage>(() => new FileSystemStorage(Settings.Default.StoragePath));
+
 			using (var host = new ServiceHost(spring.Get<IFaatService>()))
 			{
 				host.Open();
