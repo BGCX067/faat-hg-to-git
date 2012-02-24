@@ -158,9 +158,12 @@ namespace Faat.Model
 			get { return _name; }
 			set
 			{
-				_name = value;
-				OnPropertyChanged("Name");
-				Write();
+				if (_name != value)
+				{
+					_name = value;
+					OnPropertyChanged("Name");
+					Write();
+				}
 			}
 		}
 
@@ -169,9 +172,13 @@ namespace Faat.Model
 			get { return _content; }
 			set
 			{
-				_content = value;
-				OnPropertyChanged("Content");
-				Write();
+				if (_content != value)
+				{
+					_content = value;
+					XTrace.XTrace.Verbose("Page Content Changed");
+					OnPropertyChanged("Content");
+					Write();
+				}
 			}
 		}
 

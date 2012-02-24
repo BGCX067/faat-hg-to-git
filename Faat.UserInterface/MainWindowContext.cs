@@ -54,6 +54,7 @@ namespace Faat.UserInterface
 				if (Connection.IsConnected)
 				{
 					_currentPage = PageViewModel.Create(RootPage, null);
+					PageViewModel.Subscribe(SpringContainer.Get<IStorage>());
 				}
 				OnPropertyChanged(null);
 			}

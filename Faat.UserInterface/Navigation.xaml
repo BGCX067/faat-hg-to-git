@@ -11,7 +11,14 @@
 				<Image Source='Resources\cube16.png' />
 				<Image Source='Resources\CopyHS.png' Visibility='{Binding IsCopied, Converter={StaticResource btv}}' ToolTip='This item is in clipboard' />
 				<Image Source='Resources\CutHS.png' Visibility='{Binding IsCutted, Converter={StaticResource btv}}' ToolTip='This item is in clipboard and going to be removed from here after paste' />
-				<Ellipse Name='State' Width='{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}' Visibility='{Binding HasExecutionResult, Converter={StaticResource btv}}'>
+				<Ellipse
+					Name='State' Width='{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}' Visibility='{Binding HasExecutionResult, Converter={StaticResource btv}}'>
+					<Ellipse.Fill>
+						<RadialGradientBrush>
+							<GradientStop Color='Black' />
+							<GradientStop Color='White' Offset='1' />
+						</RadialGradientBrush>
+					</Ellipse.Fill>
 				</Ellipse>
 				<TextBlock Text='{Binding Page.Name}' />
 				<StackPanel.ContextMenu>
@@ -45,6 +52,16 @@
 							<RadialGradientBrush>
 								<GradientStop Color='#FF00BB00' />
 								<GradientStop Color='#4400BB00' Offset='1' />
+							</RadialGradientBrush>
+						</Setter.Value>
+					</Setter>
+				</DataTrigger>
+				<DataTrigger Binding='{Binding ExecutionResult}' Value='Failed'>
+					<Setter TargetName='State' Property='Fill'>
+						<Setter.Value>
+							<RadialGradientBrush>
+								<GradientStop Color='#FFBB0000' />
+								<GradientStop Color='#44BB0000' Offset='1' />
 							</RadialGradientBrush>
 						</Setter.Value>
 					</Setter>

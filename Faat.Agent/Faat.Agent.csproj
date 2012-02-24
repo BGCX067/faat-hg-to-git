@@ -51,7 +51,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="FaatAgent.cs" />
     <Compile Include="FaatAgentExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -68,6 +68,10 @@
     <ProjectReference Include="..\Faat.Contract\Faat.Contract.csproj">
       <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
       <Name>Faat.Contract</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.Model\Faat.Model.csproj">
+      <Project>{AE8E6737-BB0D-4119-A721-D51061ED1EF9}</Project>
+      <Name>Faat.Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\Faat.Parser\Faat.Parser.csproj">
       <Project>{A8F2AB8E-3953-4394-A249-5AD6F3F7B20D}</Project>

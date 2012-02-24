@@ -6,47 +6,14 @@ using MyUtils;
 
 namespace Faat.Agent
 {
-	public class FaatAgentExecutor// : IDisposable
+	public class FaatAgentExecutor
 	{
-
-		public void RunPage(string serverAddress, string pageIdentifier, string resultDataIdentifier)
+		public ExecutionResult RunPage(string serverAddress, string pageIdentifier, string resultDataIdentifier)
 		{
 			using (var dom = new SeparateDomain())
 			{
-				var exRemote = (Exception)dom.Execute<FaatAgent, object>(x =>
-				{
-					var ex = x.RunPage(serverAddress, pageIdentifier, resultDataIdentifier);
-					return ex;
-				});
-				if (exRemote != null)
-				{
-					throw exRemote;
-				}
+				return (ExecutionResult)dom.Execute<FaatAgent, object>(x => x.RunPage(serverAddress, pageIdentifier, resultDataIdentifier));
 			}
 		}
-
-//		protected virtual void Dispose(bool disposing)
-//		{
-//			if (disposing)
-//			{
-//				
-//			}
-//			var d = _dom;
-//			if (d != null)
-//			{
-//				d.Dispose();
-//			}
-//		}
-//
-//		public void Dispose()
-//		{
-//			GC.SuppressFinalize(this);
-//			Dispose(true);
-//		}
-//
-//		~FaatAgentExecutor()
-//		{
-//			Dispose(false);
-//		}
 	}
 }

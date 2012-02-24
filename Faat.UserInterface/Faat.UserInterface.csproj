@@ -86,6 +86,7 @@
     </Compile>
     <Compile Include="BtvConverter.cs" />
     <Compile Include="ConnectionViewModel.cs" />
+    <Compile Include="Editor\Highlighter.cs" />
     <Compile Include="LogOn.xaml.cs">
       <DependentUpon>LogOn.xaml</DependentUpon>
     </Compile>
@@ -171,6 +172,10 @@
     <ProjectReference Include="..\Faat.Storage\Faat.Storage %28contract%29.csproj">
       <Project>{751D3C72-6E0D-4A6F-980E-E1AF7F9103A8}</Project>
       <Name>Faat.Storage %28contract%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Faat.UserInterface.Common\Faat.UserInterface.Common.csproj">
+      <Project>{9B760184-BF94-4F82-A133-CD4F903402BD}</Project>
+      <Name>Faat.UserInterface.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
