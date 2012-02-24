@@ -19,12 +19,7 @@ namespace Faat.ControllerService.Console
 
 			var spring = SpringContainer.Root;
 			spring.Add<IStorage, FileSystemStorage>();
-			using (var host = new ServiceHost(spring.Get<IFaatService>(), new[]
-			{
-				new Uri("http://localhost/Faat"),
-				// new Uri("http://localhost/Design_Time_Addresses/FaatTest/"),
-				new Uri("net.tcp://localhost:4444/Faat"),
-			}))
+			using (var host = new ServiceHost(spring.Get<IFaatService>()))
 			{
 				host.Open();
 				System.Console.WriteLine("Ready. Press any key to shutdown.");
