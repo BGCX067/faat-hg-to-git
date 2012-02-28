@@ -7,12 +7,13 @@ namespace Faat.Model
 {
 	public enum ExecutionResultState
 	{
-		Unknown,
+		Unknown, // result is not initialized
 		Passed,
 		Failed,
 		Warning,
 		Exception,
 		Timeout,
 		BadTest,
+		ActionUnknown, // script action not found
 	}
 }

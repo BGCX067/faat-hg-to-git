@@ -4,7 +4,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using System.Windows.Media;
 
@@ -104,7 +103,7 @@ namespace Faat.UserInterface.Editor
 					ChangeLinePart(lineStartOffset, line.EndOffset, element => element.TextRunProperties.SetForegroundBrush(_block));
 				}
 
-				var brush = GetBrushBuState(astLine.ResultState);
+				var brush = GetBrushByState(astLine.ResultState);
 				if (brush != null)
 				{
 					ChangeLinePart(lineStartOffset, line.EndOffset, element => element.TextRunProperties.SetBackgroundBrush(brush));
@@ -112,7 +111,7 @@ namespace Faat.UserInterface.Editor
 			}
 		}
 
-		Brush GetBrushBuState(ExecutionResultState? state)
+		static Brush GetBrushByState(ExecutionResultState? state)
 		{
 			switch (state)
 			{
@@ -122,35 +121,26 @@ namespace Faat.UserInterface.Editor
 					switch (state.Value)
 					{
 						case ExecutionResultState.Passed:
-							return _passed;
+							return _brushPassed;
 						case ExecutionResultState.Failed:
-							return _failed;
+							return _brushFailed;
 						case ExecutionResultState.Warning:
 						case ExecutionResultState.Exception:
 						case ExecutionResultState.Timeout:
 						case ExecutionResultState.BadTest:
 						case ExecutionResultState.Unknown:
-							return _error;
+						case ExecutionResultState.ActionUnknown:
+							return _brushException;
 						default:
 							throw new ArgumentOutOfRangeException();
 					}
 			}
 		}
 
-		// standart
-		static readonly Brush _passedSimple = new LinearGradientBrush(Color.FromArgb(0x44, 0x77, 0xFF, 0x77), Color.FromArgb(0x44, 0x00, 0x77, 0x00), new Point(0, 0), new Point(0, 1));
-
-		// standart convertors
-		static readonly Brush _passed = new LinearGradientBrush((C<Color>)"#4477FF77", (C<Color>)"#44007700", (C<Point>)"0 0", (C<Point>)"0 1");
-		static readonly Brush _failed = new LinearGradientBrush((C<Color>)"#44FF7777", (C<Color>)"#44770000", (C<Point>)"0 0", (C<Point>)"0 1");
-		static readonly Brush _error = new LinearGradientBrush((C<Color>)"#4477FFFF", (C<Color>)"#44007777", (C<Point>)"0 0", (C<Point>)"0 1");
-
 		// LinearGradientBrush convertor
-		static readonly Brush _passed2 = (C<LinearGradientBrush>)"0 1 #4477FF77 #44007700";
-		static readonly Brush _passed3 = (C<LinearGradientBrush>)"0 0 0 1 #4477FF77 #44007700";
-		static readonly Brush _passed4 = (C<LinearGradientBrush>)"0,0 0 1 #4477FF77 #44007700";
-		static readonly Brush _passed5 = (C<LinearGradientBrush>)"0 0 0,1 #4477FF77 #44007700";
-		static readonly Brush _passed6 = (C<LinearGradientBrush>)"0,0 0,1 #4477FF77 #44007700";
+		static readonly Brush _brushPassed = (C<LinearGradientBrush>)"0 1 #4477FF77 #44007700";
+		static readonly Brush _brushFailed = (C<LinearGradientBrush>)"0 1 #44FF7777 #44770000";
+		static readonly Brush _brushException = (C<LinearGradientBrush>)"0 1 #44FFFF77 #44777700";
 	}
 
 //	static class Cvts

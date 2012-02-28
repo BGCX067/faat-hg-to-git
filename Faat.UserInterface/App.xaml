@@ -27,13 +27,13 @@
 			<!-- Disable Unfocused Grayed -->
 			<Style TargetType="TreeViewItem">
 				<Style.Resources>
-					<LinearGradientBrush x:Key="{x:Static SystemColors.ControlBrushKey}" EndPoint='0 1'>
-						<GradientStop Color='#7777AAFF' />
-						<GradientStop Offset='1' Color='#777799BB' />
+					<LinearGradientBrush x:Key="{x:Static SystemColors.ControlBrushKey}" EndPoint='1 0'>
+						<GradientStop Color='#337777FF' />
+						<GradientStop Offset='1' Color='#77000077' />
 					</LinearGradientBrush>
-					<LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint='0 1'>
-						<GradientStop Color='#7777AAFF' />
-						<GradientStop Offset='1' Color='#777799BB' />
+					<LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint='1 0'>
+						<GradientStop Color='#337777FF' />
+						<GradientStop Offset='1' Color='#77000077' />
 					</LinearGradientBrush>
 				</Style.Resources>
 				<Style.Triggers>

@@ -135,13 +135,14 @@ namespace Faat.Agent
 
 			readonly Dictionary<ExecutionResultState, int> _priorities = new Dictionary<ExecutionResultState, int>
 			{
-				{ExecutionResultState.BadTest, 110},
-				{ExecutionResultState.Exception, 100},
-				{ExecutionResultState.Failed, 90},
-				{ExecutionResultState.Warning, 80},
+				{ExecutionResultState.BadTest, 110}, // if test is bad  no reason for analyzing other problems
+				{ExecutionResultState.Exception, 90}, // if unexpected exception encountered - no reason for analyzing other problems
+				{ExecutionResultState.ActionUnknown, 70},
+				{ExecutionResultState.Failed, 50},
+				{ExecutionResultState.Warning, 30},
 				{ExecutionResultState.Timeout, 10},
 				{ExecutionResultState.Unknown, 0},
-				{ExecutionResultState.Passed, -100},
+				{ExecutionResultState.Passed, -10}, // last resort
 			};
 
 			public int Compare(ExecutionResultState x, ExecutionResultState y)
@@ -177,6 +178,7 @@ namespace Faat.Agent
 					return;
 				}
 			}
+			line.ResultState = ExecutionResultState.ActionUnknown;
 			XTrace.XTrace.Error("No handlers", line.String);
 
 		}

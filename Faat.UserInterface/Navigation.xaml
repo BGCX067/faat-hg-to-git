@@ -7,7 +7,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
 	<UserControl.Resources>
 		<HierarchicalDataTemplate DataType='{x:Type UserInterface:PageViewModel}' ItemsSource='{Binding Children}'>
-			<StackPanel Orientation='Horizontal' Name='st'>
+			<StackPanel Orientation='Horizontal' Name='st' AllowDrop='True' DragOver='Drag_DragOver' Drop='st_Drop' PreviewMouseLeftButtonDown='Drag_PreviewMouseLeftButtonDown' PreviewMouseMove='Drag_PreviewMouseMove' >
 				<Image Source='Resources\cube16.png' />
 				<Image Source='Resources\CopyHS.png' Visibility='{Binding IsCopied, Converter={StaticResource btv}}' ToolTip='This item is in clipboard' />
 				<Image Source='Resources\CutHS.png' Visibility='{Binding IsCutted, Converter={StaticResource btv}}' ToolTip='This item is in clipboard and going to be removed from here after paste' />
@@ -15,8 +15,8 @@
 					Name='State' Width='{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}}' Visibility='{Binding HasExecutionResult, Converter={StaticResource btv}}'>
 					<Ellipse.Fill>
 						<RadialGradientBrush>
-							<GradientStop Color='Black' />
-							<GradientStop Color='White' Offset='1' />
+							<GradientStop Color='#FFBBBB00' />
+							<GradientStop Color='#44BBBB00' Offset='1' />
 						</RadialGradientBrush>
 					</Ellipse.Fill>
 				</Ellipse>
@@ -70,6 +70,7 @@
 		</HierarchicalDataTemplate>
 	</UserControl.Resources>
     <Grid>
+		<!--DragDrop.GiveFeedback='Drag_GiveFeedback'-->
 		<TreeView ItemsSource='{Binding RootPages}' SelectedItemChanged='TreeViewSelectedItemChanged' Style='{StaticResource Navi}' PreviewMouseRightButtonDown='TreeView_PreviewMouseRightButtonDown' x:Name='tv'>
 			
 		</TreeView>

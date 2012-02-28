@@ -54,7 +54,9 @@ namespace Faat.Model
 		[Conditional("DEBUG")]
 		void DebugRegister(string identity)
 		{
+#if DEBUG
 			DebugInstMapFromMap.Add(identity, this);
+#endif
 		}
 
 		public StringPage(IStorage storage, string identity = null)

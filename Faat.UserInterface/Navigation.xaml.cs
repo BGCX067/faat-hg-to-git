@@ -14,6 +14,10 @@ using Faat.Storage;
 
 using MySpring;
 
+using MyUtils;
+
+using XTrace;
+
 namespace Faat.UserInterface
 {
 	/// <summary>
@@ -117,6 +121,134 @@ namespace Faat.UserInterface
 		{
 			return VisualTreeHelper.GetParent(current);
 		}
+
+		private void Drag_DragOver(object sender, DragEventArgs e)
+		{
+			NavDrag.Verbose("dnd", e.Effects + " " + e.Data);
+			var element = sender as FrameworkElement;
+
+			var eff = DragDropEffects.None;
+
+			if (element != null)
+			{
+				var currentPage = element.DataContext as PageViewModel;
+				if (currentPage != null)
+				{
+					_dropTarget = currentPage;
+					NavDrag.Verbose("PotentialDropTarget", _dropTarget);
+					eff = GetDropEffects(_draggingModel, _dropTarget, e);
+				}
+			}
+
+			e.Effects = eff;
+
+			NavDrag.Verbose("ResultEffect", e.Effects);
+			e.Handled = true;
+		}
+
+		DragDropEffects GetDropEffects(PageViewModel source, PageViewModel target, DragEventArgs e)
+		{
+			if (source == null)
+			{
+				return DragDropEffects.None;
+			}
+			if (target == null)
+			{
+				return DragDropEffects.None;
+			}
+			if (source == target)
+			{
+				return DragDropEffects.None;
+			}
+
+			if (e.KeyStates.HasFlag(DragDropKeyStates.ControlKey))
+			{
+				return DragDropEffects.Copy;
+			}
+			return DragDropEffects.Move;
+
+			return DragDropEffects.All;
+		}
+
+		private void st_Drop(object sender, DragEventArgs e)
+		{
+			NavDrag.Verbose("dnd", e.Effects + " " + e.Data);
+			// MessageBox.Show("{2}\r\n{0}\r\nto\r\n{1}".Arg(_draggingModel, _dropTarget, e.Effects));
+			var eff = GetDropEffects(_draggingModel, _dropTarget, e);
+			if (eff == DragDropEffects.Copy)
+			{
+				_draggingModel.Copy();
+				_dropTarget.PasteChild();
+			}
+			else if (eff == DragDropEffects.Move)
+			{
+				_draggingModel.Cut();
+				_dropTarget.PasteChild();
+			}
+			// erease clipboard
+			PageViewModel.Copy(null);
+		}
+
+		static readonly XTraceSource NavDrag = new XTraceSource("NavDrag");
+
+		Point _startPoint;
+		bool _isDragging;
+		PageViewModel _draggingModel;
+		PageViewModel _dropTarget;
+
+		private void Drag_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		{
+			var element = sender as FrameworkElement;
+
+			if (element != null)
+			{
+				var currentPage = element.DataContext as PageViewModel;
+				if (currentPage != null)
+				{
+					_startPoint = e.GetPosition(null);
+					_draggingModel = currentPage;
+					NavDrag.Verbose("DragSource", _draggingModel);
+				}
+			}
+		}
+
+		private void Drag_PreviewMouseMove(object sender, MouseEventArgs e)
+		{
+			if (e.LeftButton == MouseButtonState.Pressed && !_isDragging)
+			{
+				var position = e.GetPosition(null);
+
+				if (Math.Abs(position.X - _startPoint.X) > SystemParameters.MinimumHorizontalDragDistance ||
+					 Math.Abs(position.Y - _startPoint.Y) > SystemParameters.MinimumVerticalDragDistance)
+				{
+					_isDragging = true;
+					NavDrag.Verbose("StartDragging");
+					var obj = _draggingModel;
+					var data = new DataObject(obj.GetType(), obj);
+					DragDrop.DoDragDrop(tv, data, DragDropEffects.Copy | DragDropEffects.Move);
+					NavDrag.Verbose("EndDragging");
+					_isDragging = false;
+				}
+			}   
+		}
+
+//		private void Drag_GiveFeedback(object sender, GiveFeedbackEventArgs e)
+//		{
+//			//e.UseDefaultCursors = true;
+//			if (e.Effects.HasFlag(DragDropEffects.Copy))
+//			{
+//				Mouse.SetCursor(Cursors.Cross);
+//			}
+//			else if (e.Effects.HasFlag(DragDropEffects.Move))
+//			{
+//				Mouse.SetCursor(Cursors.Pen);
+//			}
+//			else
+//			{
+//				Mouse.SetCursor(Cursors.No);
+//			}
+//			e.Handled = true;
+//		}
 
 	}
 }
