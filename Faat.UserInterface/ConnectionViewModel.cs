@@ -32,10 +32,11 @@ namespace Faat.UserInterface
 				{
 					_state = value;
 					OnPropertyChanged(null);
-					Application.Current.Dispatcher.BeginInvoke((Action)delegate
+					var d = DefaultDispatcher;
+					if (d != null)
 					{
-						CommandManager.InvalidateRequerySuggested();
-					});
+						d.BeginInvoke((Action) CommandManager.InvalidateRequerySuggested);
+					}
 				}
 			}
 		}

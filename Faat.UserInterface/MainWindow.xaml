@@ -5,7 +5,6 @@
 	xmlns:UserInterface="clr-namespace:Faat.UserInterface"
 	Title="Faat Browser"
 	Name='this'
-	WindowState='Maximized'
 	ResizeMode='CanResizeWithGrip' Height="800" Width="1250">
 	<Window.Resources>
 		<Color x:Key='global_bg0'>#DDDDDD</Color> <!--// 0-->
@@ -19,11 +18,11 @@
 
 		<LinearGradientBrush StartPoint='0 0' EndPoint='1 0' x:Key='global_BrushLeft' x:Name='gs_global_1'>
 			<GradientStop Offset='0' Color='#FFFFFF' />
-			<GradientStop Offset='1' Color='Transparent' />
+<!--			<GradientStop Offset='1' Color='Transparent' />-->
 		</LinearGradientBrush>
-		<LinearGradientBrush StartPoint='1 0' EndPoint='0 0' x:Key='global_BrushRight' x:Name='gs_global_2'>
+		<LinearGradientBrush StartPoint='1 0' EndPoint='0 0' x:Key='global_BrushRight' x:Name='gs_global_1'>
 			<GradientStop Offset='0' Color='#FFFFFF' />
-			<GradientStop Offset='1' Color='Transparent' />
+<!--			<GradientStop Offset='1' Color='Transparent' />-->
 		</LinearGradientBrush>
 		<Storyboard x:Key='global_BackgroundAnimation' RepeatBehavior='Forever' Storyboard.TargetName='this'  Storyboard.TargetProperty='(Control.Background).Color' >
 			<ColorAnimationUsingKeyFrames Duration='00:10:00' >
@@ -69,13 +68,7 @@
 		<UserInterface:PageBrowser Grid.Row='1' Grid.Column='2' DataContext='{Binding CurrentPage}' x:Name='page' Background='{StaticResource global_BrushRight}'>
 		</UserInterface:PageBrowser>
 
-		<Border Visibility='{Binding IsNotConnected, Converter={StaticResource btv}}' Grid.ColumnSpan='99' Grid.RowSpan='99' DataContext='{Binding Connection}'>
-			<Border.Background>
-				<LinearGradientBrush EndPoint='0 1'>
-					<GradientStop Color='#BB444444' />
-					<GradientStop Color='#BB000000' Offset='1' />
-				</LinearGradientBrush>
-			</Border.Background>
+		<Border Visibility='{Binding IsNotConnected, Converter={StaticResource btv}}' Grid.ColumnSpan='99' Grid.RowSpan='99' DataContext='{Binding Connection}' Style="{StaticResource LogonBorder}">
 			<Grid HorizontalAlignment='Center' VerticalAlignment='Center'>
 				<Grid.RowDefinitions>
 					<RowDefinition />

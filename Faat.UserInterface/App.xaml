@@ -1,5 +1,9 @@
-﻿<Application x:Class="Faat.UserInterface.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:GrayscaleEffect="clr-namespace:GrayscaleEffect;assembly=GrayscaleEffect"
-             xmlns:UserInterface="clr-namespace:Faat.UserInterface" StartupUri="MainWindow.xaml">
+﻿<Application
+	x:Class="Faat.UserInterface.App"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:UserInterface="clr-namespace:Faat.UserInterface"
+	ShutdownMode="OnExplicitShutdown">
 	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
@@ -12,69 +16,11 @@
 			<UserInterface:BtvConverter x:Key='btvhn' IsHide='True' IsInverted='True' />
 			<UserInterface:BtbNegateConverter x:Key='btbn'/>
 			
-				<!--		<Style TargetType='TreeViewItem'>-->
-			<!--			<Setter Property='Template'>-->
-			<!--				<Setter.Value>-->
-			<!--					<ControlTemplate>-->
-			<!--						<Border BorderThickness='1' BorderBrush='Red' Height='10'>-->
-			<!--						-->
-			<!--						</Border>-->
-			<!--					</ControlTemplate>-->
-			<!--				</Setter.Value>-->
-			<!--			</Setter>-->
-			<!--		</Style>-->
-
-			<!-- Disable Unfocused Grayed -->
-			<Style TargetType="TreeViewItem">
-				<Style.Resources>
-					<LinearGradientBrush x:Key="{x:Static SystemColors.ControlBrushKey}" EndPoint='0 1'>
-						<GradientStop Color='#7777AAFF' />
-						<GradientStop Offset='1' Color='#777799BB' />
-					</LinearGradientBrush>
-					<LinearGradientBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" EndPoint='0 1'>
-						<GradientStop Color='#7777AAFF' />
-						<GradientStop Offset='1' Color='#777799BB' />
-					</LinearGradientBrush>
-				</Style.Resources>
-				<Style.Triggers>
-<!--					<Trigger Property='IsMouseOver' Value='True'>-->
-<!--						<Setter Property='Background'>-->
-<!--							<Setter.Value>-->
-<!--								<LinearGradientBrush EndPoint='0 1' Opacity='.4'>-->
-<!--									<GradientStop Color='#AA00FF00' />-->
-<!--									<GradientStop Offset='1' Color='#AA007700' />-->
-<!--								</LinearGradientBrush>-->
-<!--							</Setter.Value>-->
-<!--						</Setter>-->
-<!--					</Trigger>-->
-<!--					<Trigger Property='IsFocused' Value='True'>-->
-<!--						<Setter Property='Background'>-->
-<!--							<Setter.Value>-->
-<!--								<LinearGradientBrush EndPoint='0 1' Opacity='.4'>-->
-<!--									<GradientStop Color='Red' />-->
-<!--									<GradientStop Offset='1' Color='#AA007700' />-->
-<!--								</LinearGradientBrush>-->
-<!--							</Setter.Value>-->
-<!--						</Setter>-->
-<!--					</Trigger>-->
-				</Style.Triggers>
-			</Style>
-
 			<Style TargetType='Image'>
 				<!--<Setter Property='IsHitTestVisible' Value='False' />-->
 				<Setter Property='Stretch' Value='None' />
 				<Setter Property='SnapsToDevicePixels' Value='True' />
 				<Setter Property='RenderOptions.BitmapScalingMode' Value='NearestNeighbor' />
-			</Style>
-
-			<GrayscaleEffect:GrayscaleEffect x:Key="gray" />
-
-			<Style x:Key="grayableMenu" TargetType="MenuItem">
-				<Style.Triggers>
-					<DataTrigger Binding="{Binding Path=Command.CanExecuteState, RelativeSource={x:Static RelativeSource.Self}}" Value="False">
-						<Setter Property="MenuItem.Effect" Value="{StaticResource gray}" />
-					</DataTrigger>
-				</Style.Triggers>
 			</Style>
 
 			<Style x:Key="collapsableMenu" TargetType="MenuItem">
@@ -85,19 +31,10 @@
 				</Style.Triggers>
 			</Style>
 
-			<Style x:Key="grayableButton" TargetType="Button">
-				<Style.Triggers>
-					<DataTrigger Binding="{Binding Path=Command.CanExecuteState, RelativeSource={x:Static RelativeSource.Self}}" Value="False">
-						<Setter Property="Button.Effect" Value="{StaticResource gray}" />
-					</DataTrigger>
-				</Style.Triggers>
-			</Style>
-
 			<Style TargetType='TextBox' x:Key='Content'>
 				<Setter Property='Background' Value='Transparent' />
 				<Setter Property='BorderThickness' Value='0' />
 				<Setter Property='TextWrapping' Value='Wrap' />
-				<Setter Property='TextOptions.TextRenderingMode' Value='ClearType' />
 				<Setter Property='FontSize' Value='16' />
 				<Setter Property='FontFamily' Value='Verdana' />
 			</Style>
@@ -105,79 +42,8 @@
 			<Style TargetType='TreeView' x:Key='Navi'>
 				<Setter Property='Background' Value='Transparent' />
 				<Setter Property='BorderThickness' Value='0' />
+			</Style>
 
-			</Style>
-			<Style TargetType='GridSplitter'>
-				<Setter Property='RenderTransformOrigin' Value='.5 .5' />
-				<Setter Property='RenderTransform'>
-					<Setter.Value>
-						<ScaleTransform CenterX='.5' CenterY='.5' />
-					</Setter.Value>
-				</Setter>
-				<Setter Property='Width' Value='4' />
-				<Setter Property='Background'>
-					<Setter.Value>
-						<LinearGradientBrush EndPoint='1 0'>
-							<GradientStop Color='#44FFFFFF' />
-							<GradientStop Offset='1' Color='#44000000' />
-						</LinearGradientBrush>
-					</Setter.Value>
-				</Setter>
-				<Setter Property='Template'>
-					<Setter.Value>
-						<ControlTemplate>
-							<Border Background='{TemplateBinding Background}' >
-								<StackPanel VerticalAlignment='Center'>
-									<StackPanel.Resources>
-										<Style TargetType='Ellipse'>
-											<Setter Property='StrokeThickness' Value='1' />
-											<Setter Property='Stroke' Value='#AA000000' />
-											<Setter Property='Width' Value='3' />
-											<Setter Property='Height' Value='3' />
-											<Setter Property='Margin' Value='0 3' />
-										</Style>
-									</StackPanel.Resources>
-									<Ellipse />
-									<Ellipse />
-									<Ellipse />
-									<Ellipse />
-									<Ellipse />
-								</StackPanel>
-							</Border>
-						</ControlTemplate>
-					</Setter.Value>
-				</Setter>
-				<Setter Property='HorizontalAlignment' Value='Center' />
-				<!--<Setter Property='ShowsPreview' Value='True' />-->
-				<Style.Triggers>
-					<Trigger Property='IsMouseOver' Value='True'>
-						<Trigger.EnterActions>
-							<BeginStoryboard>
-								<Storyboard>
-									<DoubleAnimation Storyboard.TargetProperty='Width' To='20' Duration='00:00:00.1' By='1' />
-<!--
-									<DoubleAnimation Storyboard.TargetProperty='RenderTransform.(ScaleTransform.ScaleX)' To='5' Duration='00:00:00.1' By='1' />
--->
-								</Storyboard>
-							</BeginStoryboard>
-						</Trigger.EnterActions>
-						<Trigger.ExitActions>
-							<BeginStoryboard>
-								<Storyboard>
-									<DoubleAnimation Storyboard.TargetProperty='Width' To='4' Duration='00:00:00.6' />
-<!--
-									<DoubleAnimation Storyboard.TargetProperty='RenderTransform.(ScaleTransform.ScaleX)' To='1' Duration='00:00:00.6' />
--->
-								</Storyboard>
-							</BeginStoryboard>
-						</Trigger.ExitActions>
-					</Trigger>
-				</Style.Triggers>
-			</Style>
-			<Style TargetType='GridSplitter' BasedOn='{StaticResource {x:Type GridSplitter}}' x:Key='RowsSplitter'>
-				<Setter Property='HorizontalAlignment' Value='Stretch' />
-				<Setter Property='VerticalAlignment' Value='Center' />
-			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
 </Application>
