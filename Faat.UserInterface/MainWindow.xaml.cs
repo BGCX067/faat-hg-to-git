@@ -14,9 +14,22 @@ namespace Faat.UserInterface
 	/// </summary>
 	public partial class MainWindow
 	{
+		protected override void OnPreviewKeyDown(KeyEventArgs e)
+		{
+			if (e.Key == Key.F7)
+			{
+				App.UsePerformanceMode = !App.UsePerformanceMode;
+				App.NeedRestart = true;
+				Application.Current.MainWindow.Close();
+			}
+			base.OnPreviewKeyDown(e);
+		}
+
 		public MainWindow()
 		{
 			InitializeComponent();
+			StyleSwitcher.Default.CurrentStyle = (Style)Resources["tbGreen"];
+
 			DataContext = Context = new MainWindowContext();
 
 			ConnectInBackground();
