@@ -4,44 +4,8 @@
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:UserInterface="clr-namespace:Faat.UserInterface"
 	Title="Faat Browser"
-	Name='this'
+	Name='this' Background='{StaticResource global_MainWindow}'
 	ResizeMode='CanResizeWithGrip' Height="800" Width="1250">
-	<Window.Resources>
-		<Color x:Key='global_bg0'>#DDDDDD</Color> <!--// 0-->
-		<Color x:Key='global_bg1'>#DDDDC0</Color> <!--// RGb // 1b-->
-		<Color x:Key='global_bg2'>#DDC0C0</Color> <!--// Rgb // 2 r-->
-		<Color x:Key='global_bg3'>#DDC0DD</Color> <!--// RgB // 1g-->
-		<Color x:Key='global_bg4'>#C0C0DD</Color> <!--// rgB  // 2 b-->
-		<Color x:Key='global_bg5'>#C0DDDD</Color> <!--// rGB // 1 r-->
-		<Color x:Key='global_bg6'>#C0DDC0</Color> <!--// rGb // 2 g-->
-		<Color x:Key='global_bg7'>#C0C0C0</Color> <!--// 3-->
-
-		<LinearGradientBrush StartPoint='0 0' EndPoint='1 0' x:Key='global_BrushLeft' x:Name='gs_global_1'>
-			<GradientStop Offset='0' Color='#FFFFFF' />
-<!--			<GradientStop Offset='1' Color='Transparent' />-->
-		</LinearGradientBrush>
-		<LinearGradientBrush StartPoint='1 0' EndPoint='0 0' x:Key='global_BrushRight' x:Name='gs_global_1'>
-			<GradientStop Offset='0' Color='#FFFFFF' />
-<!--			<GradientStop Offset='1' Color='Transparent' />-->
-		</LinearGradientBrush>
-		<Storyboard x:Key='global_BackgroundAnimation' RepeatBehavior='Forever' Storyboard.TargetName='this'  Storyboard.TargetProperty='(Control.Background).Color' >
-			<ColorAnimationUsingKeyFrames Duration='00:10:00' >
-				<LinearColorKeyFrame Value='{StaticResource global_bg1}' />
-				<LinearColorKeyFrame Value='{StaticResource global_bg2}' />
-				<LinearColorKeyFrame Value='{StaticResource global_bg3}' />
-				<LinearColorKeyFrame Value='{StaticResource global_bg4}' />
-				<LinearColorKeyFrame Value='{StaticResource global_bg5}' />
-				<LinearColorKeyFrame Value='{StaticResource global_bg6}' />
-				<LinearColorKeyFrame Value='{StaticResource global_bg7}' />
-				<LinearColorKeyFrame Value='{StaticResource global_bg0}' />
-				<LinearColorKeyFrame Value='{StaticResource global_bg1}' />
-			</ColorAnimationUsingKeyFrames>
-		</Storyboard>
-	</Window.Resources>
-	<Window.Background>
-		<SolidColorBrush Color='{StaticResource global_bg1}'>
-		</SolidColorBrush>
-	</Window.Background>
 
 	<Window.CommandBindings>
 		<CommandBinding Command='{x:Static UserInterface:MyNavigationCommands.ToggleCurrentView}' Executed='ToggleCurrentView_Executed' />

@@ -166,8 +166,6 @@ namespace Faat.UserInterface
 				return DragDropEffects.Copy;
 			}
 			return DragDropEffects.Move;
-
-			return DragDropEffects.All;
 		}
 
 		private void st_Drop(object sender, DragEventArgs e)
