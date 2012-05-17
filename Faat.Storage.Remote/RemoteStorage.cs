@@ -33,7 +33,6 @@ namespace Faat.Storage.Remote
 					try
 					{
 						var localIdentity = (string)x;
-						_parent.ReloadPage(localIdentity);
 						_parent.OnDataChanged(localIdentity);
 					}
 					catch (Exception ex)
@@ -48,15 +47,6 @@ namespace Faat.Storage.Remote
 				return message;
 			}
 
-		}
-
-		void ReloadPage(string localIdentity)
-		{
-			var page = _pages[localIdentity] as StringPage;
-			if (page != null)
-			{
-				page.Load();
-			}
 		}
 
 		readonly bool _notifiable;
@@ -75,14 +65,6 @@ namespace Faat.Storage.Remote
 		public string Address
 		{
 			get { return _address ?? _client.Endpoint.Address.ToString(); }
-		}
-
-		public IPage GetPage(string identity)
-		{
-			lock (_pages)
-			{
-				return _pages[identity, () => new StringPage(this, identity)];
-			}
 		}
 
 		public bool IsAlive
@@ -113,12 +95,22 @@ namespace Faat.Storage.Remote
 			return result;
 		}
 
+		GetDataResult IStorage.GetData2(string identity)
+		{
+			throw new NotImplementedException();
+		}
+
 		public void SetData(string identity, string data)
 		{
 			AutoReconnect(delegate
 			{
 				_client.SetData(identity, data);
 			});
+		}
+
+		void IStorage.SetData(string identity, MetaData metaData, string data)
+		{
+			throw new NotImplementedException();
 		}
 
 		void AutoReconnect(Action act)

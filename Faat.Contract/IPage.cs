@@ -10,7 +10,6 @@ namespace Faat
 		ICollection<IPage> Links { get; }
 
 		string Identity { get; }
-
 		string Name { get; set; }
 		string Content { get; set; }
 	}

@@ -7,22 +7,22 @@ namespace Faat.Storage
 {
 	public static class Ext
 	{
-		public static IPage GetRecycleBin(this IStorage storage)
+		public static IPage GetRecycleBin(this IModelProvider modelProvider)
 		{
-			if (storage == null)
+			if (modelProvider == null)
 			{
-				throw new ArgumentNullException("storage");
+				throw new ArgumentNullException("modelProvider");
 			}
-			return storage.GetPage(Const.RecycleBinPage);
+			return modelProvider.GetPage(Const.RecycleBinPage);
 		}
 
-		public static IPage GetRoot(this IStorage storage)
+		public static IPage GetRoot(this IModelProvider modelProvider)
 		{
-			if (storage == null)
+			if (modelProvider == null)
 			{
-				throw new ArgumentNullException("storage");
+				throw new ArgumentNullException("modelProvider");
 			}
-			return storage.GetPage(Const.RootPage);
+			return modelProvider.GetPage(Const.RootPage);
 		}
 	}
 }

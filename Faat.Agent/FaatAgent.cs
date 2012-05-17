@@ -42,7 +42,8 @@ namespace Faat.Agent
 				new StructuredTextFileXTraceListener("FaatAgent", XTrace.RelativePath.TempFolder);
 				using (var storage = new RemoteStorage(false, serverAddress))
 				{
-					return RunPage(storage, pageIdentifier, resultDataIdentifier);
+					var mp = new ModelProvider.ModelProvider(storage);
+					return RunPage(mp, pageIdentifier, resultDataIdentifier);
 				}
 			}
 			catch (Exception ex)
@@ -51,9 +52,9 @@ namespace Faat.Agent
 			}
 		}
 
-		public ExecutionResult RunPage(RemoteStorage storage, string pageIdentifier, string resultDataIdentifier)
+		public ExecutionResult RunPage(IModelProvider modelProvider, string pageIdentifier, string resultDataIdentifier)
 		{
-			var result = RunPage(storage.GetPage(pageIdentifier).Content);
+			var result = RunPage(modelProvider.GetPage(pageIdentifier).Content);
 /*
 			if (resultDataIdentifier != null)
 			{
@@ -61,10 +62,10 @@ namespace Faat.Agent
 			}
 */
 
-			storage.SetData(Const.GlobalPageResultGraphPrefix + pageIdentifier, result.Serialize());
+			modelProvider.SetData(Const.GlobalPageResultGraphPrefix + pageIdentifier, result.Serialize());
 			if (result.Page != null)
 			{
-				storage.SetData(Const.GlobalPageResultSimplePrefix + pageIdentifier, result.Page.ResultState.ToString());
+				modelProvider.SetData(Const.GlobalPageResultSimplePrefix + pageIdentifier, result.Page.ResultState.ToString());
 			}
 
 			return result;

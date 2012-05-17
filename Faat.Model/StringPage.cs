@@ -13,7 +13,7 @@ namespace Faat.Model
 {
 	public class StringPage : ObservableObject, IPage
 	{
-		readonly IStorage _storage;
+		readonly IModelProvider _modelProvider;
 		readonly string _identity;
 
 		string _name;
@@ -33,39 +33,39 @@ namespace Faat.Model
 			return end;
 		}
 
-#if DEBUG
-		static readonly Dictionary<IStorage, Dictionary<string, IPage>> _debugInstantiated = new Dictionary<IStorage, Dictionary<string, IPage>>();
-
-		Dictionary<string, IPage> DebugInstMapFromMap
-		{
-			get
-			{
-				Dictionary<string, IPage> map;
-				if (!_debugInstantiated.TryGetValue(Storage, out map))
-				{
-					_debugInstantiated[Storage] = map = new Dictionary<string, IPage>();
-				}
-				return map;
-			}
-		}
-
-#endif
+//#if DEBUG
+//		static readonly Dictionary<IStorage, Dictionary<string, IPage>> _debugInstantiated = new Dictionary<IStorage, Dictionary<string, IPage>>();
+//
+//		Dictionary<string, IPage> DebugInstMapFromMap
+//		{
+//			get
+//			{
+//				Dictionary<string, IPage> map;
+//				if (!_debugInstantiated.TryGetValue(ModelProvider, out map))
+//				{
+//					_debugInstantiated[ModelProvider] = map = new Dictionary<string, IPage>();
+//				}
+//				return map;
+//			}
+//		}
+//
+//#endif
 
 		[Conditional("DEBUG")]
 		void DebugRegister(string identity)
 		{
-#if DEBUG
-			DebugInstMapFromMap.Add(identity, this);
-#endif
+//#if DEBUG
+//			DebugInstMapFromMap.Add(identity, this);
+//#endif
 		}
 
-		public StringPage(IStorage storage, string identity = null)
+		public StringPage(IModelProvider modelProvider, string identity = null)
 		{
 //			if (storage == null)
 //			{
 //				throw new ArgumentNullException("storage");
 //			}
-			_storage = storage;
+			_modelProvider = modelProvider;
 			_identity = identity ?? Guid.NewGuid().ToString("N");
 
 			DebugRegister(_identity);
@@ -94,7 +94,7 @@ namespace Faat.Model
 
 		public bool Load()
 		{
-			return Load(Storage.GetData(Identity));
+			return Load(ModelProvider.GetData(Identity));
 		}
 
 		public bool Load(string pageData)
@@ -121,7 +121,7 @@ namespace Faat.Model
 		SyncOppositeList<IPage> ReadList(string line, Func<IPage, ICollection<IPage>> oppositeList, Action altered)
 		{
 			var pagesIds = (line??"").Split(new[] {'|'}, StringSplitOptions.RemoveEmptyEntries);
-			var pages = pagesIds.Select(x => Storage.GetPage(x)).ToArray();
+			var pages = pagesIds.Select(x => ModelProvider.GetPage(x)).ToArray();
 
 			return new SyncOppositeList<IPage>(this, oppositeList, altered, pages);
 		}
@@ -184,14 +184,14 @@ namespace Faat.Model
 			}
 		}
 
-		public IStorage Storage
+		public IModelProvider ModelProvider
 		{
-			get { return _storage; }
+			get { return _modelProvider; }
 		}
 
 		void Write()
 		{
-			Storage.SetData(_identity, Serialize());
+			ModelProvider.SetData(_identity, Serialize());
 		}
 
 		public string Serialize()

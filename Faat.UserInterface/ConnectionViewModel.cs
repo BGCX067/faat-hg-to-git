@@ -19,8 +19,6 @@ namespace Faat.UserInterface
 {
 	class ConnectionViewModel : DispatchableObservable
 	{
-		readonly SpringContainer SpringContainer = SpringContainer.Root;
-
 		ConnectionState _state = ConnectionState.Disconnected;
 
 		public ConnectionState State
@@ -81,9 +79,9 @@ namespace Faat.UserInterface
 						if (!IsConnected)
 						{
 							State = ConnectionState.Connecting;
-							HandleDisconnect(delegate
+							AspectHandleDisconnect(delegate
 							{
-								SpringContainer.Add<IStorage>(new RemoteStorage(true, ServerAddress));
+								Storage = new RemoteStorage(true, ServerAddress);
 							});
 							VerifyConnection();
 						}
@@ -96,6 +94,18 @@ namespace Faat.UserInterface
 			});
 		}
 
+		RemoteStorage _storage;
+
+		public RemoteStorage Storage
+		{
+			get { return _storage; }
+			private set
+			{
+				_storage = value;
+				OnPropertyChanged("Storage");
+			}
+		}
+
 		public bool CanConnect
 		{
 			get { return State == ConnectionState.Disconnected; }
@@ -103,22 +113,22 @@ namespace Faat.UserInterface
 
 		void VerifyConnection()
 		{
-			HandleDisconnect(delegate
+			AspectHandleDisconnect(delegate
 			{
 				lock (_sync)
 				{
-					var storage = SpringContainer.Get<IStorage>() as RemoteStorage;
-					IsConnected = storage != null && storage.IsAlive;
-					if (IsConnected)
+					var storage = Storage;
+					var isCon = IsConnected = storage != null && storage.IsAlive;
+					if (isCon)
 					{
-						storage.PropertyChanged -= storage_PropertyChanged;
-						storage.PropertyChanged += storage_PropertyChanged;
+						storage.PropertyChanged -= StoragePropertyChanged;
+						storage.PropertyChanged += StoragePropertyChanged;
 					}
 				}
 			});
 		}
 
-		void HandleDisconnect(Action act)
+		void AspectHandleDisconnect(Action act)
 		{
 			lock (_sync)
 			{
@@ -136,7 +146,7 @@ namespace Faat.UserInterface
 			}
 		}
 
-		void storage_PropertyChanged(object sender, PropertyChangedEventArgs e)
+		void StoragePropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.Is("IsConnected"))
 			{

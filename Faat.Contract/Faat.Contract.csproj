@@ -35,6 +35,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IModelProvider.cs" />
     <Compile Include="IPage.cs" />
     <Compile Include="IPageParser.cs" />
     <Compile Include="RefreshType.cs" />

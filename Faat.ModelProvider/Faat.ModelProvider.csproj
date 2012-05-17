@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{703B6917-1705-497E-8752-33F12C7ABDF6}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{5B5402E6-3A67-41A6-9E4B-004AB74D3C6D}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Faat.Agent</RootNamespace>
-    <AssemblyName>Faat.Agent</AssemblyName>
+    <RootNamespace>Faat.ModelProvider</RootNamespace>
+    <AssemblyName>Faat.ModelProvider</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,37 +30,23 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="MyUtils4">
       <HintPath>..\_components\MyUtils4.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ServiceModel" />
-    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="XTrace4, Version=1.2.0.0, Culture=neutral, PublicKeyToken=9ccf460fa6b88228, processorArchitecture=MSIL">
-      <HintPath>..\_components\XTrace4.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
-    <Compile Include="FaatAgent.cs" />
-    <Compile Include="FaatAgentExecutor.cs" />
+    <Compile Include="ModelProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Faat.Client\Faat.Client.csproj">
-      <Project>{A1DA6780-73AA-4F3E-AFE2-A3105A8C64C8}</Project>
-      <Name>Faat.Client</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Faat.Common\Faat.Common.csproj">
       <Project>{4B27DF88-CFFB-4441-B586-D89C58ACB494}</Project>
       <Name>Faat.Common</Name>
@@ -69,21 +55,9 @@
       <Project>{99E1637F-D04A-48B5-B17D-7CC9D696E16C}</Project>
       <Name>Faat.Contract</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Faat.ModelProvider\Faat.ModelProvider.csproj">
-      <Project>{5B5402E6-3A67-41A6-9E4B-004AB74D3C6D}</Project>
-      <Name>Faat.ModelProvider</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Faat.Model\Faat.Model.csproj">
       <Project>{AE8E6737-BB0D-4119-A721-D51061ED1EF9}</Project>
       <Name>Faat.Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Faat.Parser\Faat.Parser.csproj">
-      <Project>{A8F2AB8E-3953-4394-A249-5AD6F3F7B20D}</Project>
-      <Name>Faat.Parser</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Faat.Storage.Remote\Faat.Storage.Remote.csproj">
-      <Project>{496B7635-2896-4B83-85E5-9C2DC06AB312}</Project>
-      <Name>Faat.Storage.Remote</Name>
     </ProjectReference>
     <ProjectReference Include="..\Faat.Storage\Faat.Storage %28contract%29.csproj">
       <Project>{751D3C72-6E0D-4A6F-980E-E1AF7F9103A8}</Project>

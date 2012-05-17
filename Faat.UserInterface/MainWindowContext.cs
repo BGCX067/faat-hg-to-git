@@ -39,7 +39,37 @@ namespace Faat.UserInterface
 
 	class MainWindowContext : ObservableObject
 	{
-		readonly SpringContainer SpringContainer = SpringContainer.Root;
+		#region Composition
+
+		readonly ConnectionViewModel _connection;
+
+		public ConnectionViewModel Connection
+		{
+			get { return _connection; }
+		}
+
+		#endregion
+
+		#region Services
+
+		SpringContainer _modelContainer;
+
+		PageViewModelCache PageViewModelCache
+		{
+			get { return _modelContainer.Get<PageViewModelCache>(); }
+		}
+
+		IStorage Storage
+		{
+			get { return _modelContainer.Get<IStorage>(); }
+		}
+
+		IModelProvider ModelProvider
+		{
+			get { return _modelContainer.Get<IModelProvider>(); }
+		}
+
+		#endregion
 
 		public MainWindowContext()
 		{
@@ -47,24 +77,34 @@ namespace Faat.UserInterface
 			_connection.PropertyChanged += ConnectionPropertyChanged;
 		}
 
+		bool _isConnectedLast;
+
 		void ConnectionPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if(e.Is("IsConnected"))
 			{
-				if (Connection.IsConnected)
+				var now = Connection.IsConnected;
+				if (!_isConnectedLast && now)
 				{
-					_currentPage = PageViewModel.Create(RootPage, null);
-					PageViewModel.Subscribe(SpringContainer.Get<IStorage>());
+					// Connected - construct model container
+					_modelContainer = new SpringContainer();
+					_modelContainer.Add<IStorage>(Connection.Storage);
+					_modelContainer.Add<PageViewModelCache, PageViewModelCache>();
+					PageViewModel.Subscribe(Storage);
+					_currentPage = PageViewModelCache.Get(RootPage, null);
+					OnPropertyChanged(null);
 				}
-				OnPropertyChanged(null);
+				else if (_isConnectedLast && !now)
+				{
+					// Disconnected
+					_modelContainer = null;
+					OnPropertyChanged(null);
+				}
+				_isConnectedLast = now;
 			}
 		}
 
-		readonly ConnectionViewModel _connection;
-		public ConnectionViewModel Connection
-		{
-			get { return _connection; }
-		}
+		#region Pages
 
 		PageViewModel _currentPage;
 
@@ -91,9 +131,9 @@ namespace Faat.UserInterface
 				}
 				return new[]
 				{
-					PageViewModel.Create(RootPage, null),
-					PageViewModel.Create(RecycleBinPage, null),
-					PageViewModel.Create(StatisticsPage, null),
+					PageViewModelCache.Get(RootPage, null),
+					PageViewModelCache.Get(RecycleBinPage, null),
+					PageViewModelCache.Get(StatisticsPage, null),
 				};
 			}
 		}
@@ -106,7 +146,7 @@ namespace Faat.UserInterface
 				{
 					return null;
 				}
-				return SpringContainer.Get<IStorage>().GetPage(Const.RootPage);
+				return ModelProvider.GetPage(Const.RootPage);
 			}
 		}
 
@@ -118,7 +158,7 @@ namespace Faat.UserInterface
 				{
 					return null;
 				}
-				return SpringContainer.Get<IStorage>().GetPage(Const.StatisticsPage);
+				return ModelProvider.GetPage(Const.StatisticsPage);
 			}
 		}
 
@@ -130,11 +170,15 @@ namespace Faat.UserInterface
 				{
 					return null;
 				}
-				var page = SpringContainer.Get<IStorage>().GetPage(Const.RecycleBinPage);
+				var page = ModelProvider.GetPage(Const.RecycleBinPage);
 				page.Name = "Recycle Bin";
 				return page;
 			}
 		}
+
+		#endregion
+
+
 
 	}
 }

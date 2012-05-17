@@ -42,15 +42,6 @@ namespace Faat.Storage.FileSystem
 			return path;
 		}
 
-		readonly WeakValueCache<string, IPage> _objects = new WeakValueCache<string, IPage>();
-
-		public IPage GetPage(string identity)
-		{
-			lock (_objects)
-			{
-				return _objects[identity, () => new StringPage(this, identity)];
-			}
-		}
 
 		public string GetData(string identity)
 		{
@@ -62,6 +53,14 @@ namespace Faat.Storage.FileSystem
 			return null;
 		}
 
+		public GetDataResult GetData2(string identity)
+		{
+			return new GetDataResult
+			{
+				Data =  GetData(identity),
+			};
+		}
+
 		readonly object _syncWrite = new object();
 
 		public void SetData(string identity, string data)
@@ -71,6 +70,11 @@ namespace Faat.Storage.FileSystem
 				File.WriteAllText(FileName(identity), data);
 			}
 			OnDataChanged(identity);
+		}
+
+		public void SetData(string identity, MetaData metaData, string data)
+		{
+			SetData(identity, data);
 		}
 
 		public event EventHandler<DataChangedEventArgs> DataChanged;

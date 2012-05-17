@@ -21,13 +21,20 @@ using OE = Obtics.Collections.ObservableEnumerable;
 
 namespace Faat.UserInterface
 {
-	class PageViewModel : ObservableObject
+	class PageViewModelCache
 	{
-		readonly IPage _page;
-		readonly PageViewModel _parent;
 		// static readonly WeakValueCache<CacheKey, PageViewModel> _cacheByPageAndParent = new WeakValueCache<CacheKey, PageViewModel>();
-		static readonly WeakValueCache<string, WeakValueCache<string, PageViewModel>> _cacheByPage = new WeakValueCache<string, WeakValueCache<string, PageViewModel>>();
+		readonly WeakValueCache<string, WeakValueCache<string, PageViewModel>> _cacheByPage = new WeakValueCache<string, WeakValueCache<string, PageViewModel>>();
 
+		public PageViewModel Get(IPage page, PageViewModel parent)
+		{
+			// var result = _cacheByPageAndParent[new CacheKey(page, parent), () => new PageViewModel(page, parent)];
+			var byParentCollection = _cacheByPage[page.Identity, () => new WeakValueCache<string, PageViewModel>()];
+			var result = byParentCollection[parent == null ? "RootInstance" : parent.Page.Identity, () => new PageViewModel(page, parent)];
+			return result;
+		}
+
+/*
 		class CacheKey
 		{
 			readonly IPage _page;
@@ -77,18 +84,23 @@ namespace Faat.UserInterface
 				}
 			}
 		}
+*/
+		
+	}
+
+	class PageViewModel : ObservableObject
+	{
+		public static PageViewModel Get(PageViewModelCache cache, IPage page, PageViewModel parent)
+		{
+			
+		}
+
+		readonly IPage _page;
+		readonly PageViewModel _parent;
 
 		public bool IsRoot
 		{
 			get { return _parent == null; }
-		}
-
-		public static PageViewModel Create(IPage page, PageViewModel parent)
-		{
-			// var result = _cacheByPageAndParent[new CacheKey(page, parent), () => new PageViewModel(page, parent)];
-			var byParentCollection = _cacheByPage[page.Identity, () => new WeakValueCache<string, PageViewModel>()];
-			var result = byParentCollection[parent == null ? "RootInstance" : parent.Page.Identity, () => new PageViewModel(page, parent)];
-			return result;
 		}
 
 		public string ContentTokenized
@@ -167,7 +179,7 @@ namespace Faat.UserInterface
 
 		public RemoteStorage Storage
 		{
-			get { return (RemoteStorage)Page.Storage; }
+			get { return (RemoteStorage)Page.ModelProvider; }
 		}
 
 		#region Commands
@@ -186,7 +198,7 @@ namespace Faat.UserInterface
 
 		public void CreateChildPage()
 		{
-			Page.Children.Add(new StringPage(Page.Storage) {Name = "New page"});
+			Page.Children.Add(new StringPage(Page.ModelProvider) {Name = "New page"});
 		}
 
 		public void Cut()
@@ -316,6 +328,7 @@ namespace Faat.UserInterface
 
 		public static void Subscribe(IStorage storage)
 		{
+			storage.DataChanged -= StorageDataChanged;
 			storage.DataChanged -= StorageDataChanged;
 			storage.DataChanged += StorageDataChanged;
 		}
