@@ -66,6 +66,16 @@
 						</Setter.Value>
 					</Setter>
 				</DataTrigger>
+				<DataTrigger Binding='{Binding UserInterface:Navigation.IsDropTraget}' Value='True'>
+					<Setter TargetName='st' Property='Fill'>
+						<Setter.Value>
+							<RadialGradientBrush>
+								<GradientStop Color='#770000BB' />
+								<GradientStop Color='#77000077' Offset='1' />
+							</RadialGradientBrush>
+						</Setter.Value>
+					</Setter>
+				</DataTrigger>
 			</HierarchicalDataTemplate.Triggers>
 		</HierarchicalDataTemplate>
 	</UserControl.Resources>

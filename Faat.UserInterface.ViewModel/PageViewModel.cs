@@ -1,28 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Input;
-using System.Xaml;
 
 using Faat.Agent;
-using Faat.Client.FaatServiceReference;
 using Faat.Model;
-using Faat.Parser;
-using Faat.Parser.Ast;
 using Faat.Storage;
 using Faat.Storage.Remote;
 
 using MyUtils;
-using OE = Obtics.Collections.ObservableEnumerable;
 
-namespace Faat.UserInterface
+namespace Faat.UserInterface.ViewModel
 {
-	class PageViewModel : ObservableObject
+	/*@ fileinporject */
+	class PageViewModel /*= ": DependencyObject  , INotifyPropertyChanged" */
 	{
+		/*# Mixin<INotifyPropertyChanged, ObservableObject> */
+
 		readonly IPage _page;
 		readonly PageViewModel _parent;
 		// static readonly WeakValueCache<CacheKey, PageViewModel> _cacheByPageAndParent = new WeakValueCache<CacheKey, PageViewModel>();

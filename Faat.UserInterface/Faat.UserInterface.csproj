@@ -114,7 +114,6 @@
     <Compile Include="PageBrowser.xaml.cs">
       <DependentUpon>PageBrowser.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PageViewModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
