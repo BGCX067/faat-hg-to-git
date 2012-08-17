@@ -25,6 +25,36 @@ namespace Faat.UserInterface
 	/// </summary>
 	public partial class Navigation
 	{
+		public static DependencyProperty IsDropTragetProperty = DependencyProperty.RegisterAttached("IsDropTraget", typeof(bool), typeof(Navigation));
+
+		public bool IsDropTraget
+		{
+			get { return (bool)GetValue(IsDropTragetProperty); }
+			set { SetValue(IsDropTragetProperty, value); }
+		}
+
+		PageViewModel DropTarget
+		{
+			get { return _dropTarget; }
+			set
+			{
+				if (_dropTarget != value)
+				{
+					var old = _dropTarget;
+					_dropTarget = value;
+
+					if (old != null)
+					{
+						old.SetValue(IsDropTragetProperty, false);
+					}
+					if (value != null)
+					{
+						value.SetValue(IsDropTragetProperty, true);
+					}
+				}
+			}
+		}
+
 		public Navigation()
 		{
 			InitializeComponent();
@@ -134,9 +164,9 @@ namespace Faat.UserInterface
 				var currentPage = element.DataContext as PageViewModel;
 				if (currentPage != null)
 				{
-					_dropTarget = currentPage;
-					NavDrag.Verbose("PotentialDropTarget", _dropTarget);
-					eff = GetDropEffects(_draggingModel, _dropTarget, e);
+					DropTarget = currentPage;
+					NavDrag.Verbose("PotentialDropTarget", DropTarget);
+					eff = GetDropEffects(_draggingModel, DropTarget, e);
 				}
 			}
 
@@ -161,28 +191,32 @@ namespace Faat.UserInterface
 				return DragDropEffects.None;
 			}
 
-			if (e.KeyStates.HasFlag(DragDropKeyStates.ControlKey))
+			if (e.KeyStates.HasFlag(DragDropKeyStates.AltKey))
 			{
-				return DragDropEffects.Copy;
+				return DragDropEffects.Move;
 			}
-			return DragDropEffects.Move;
+			return DragDropEffects.Copy;
 		}
 
 		private void st_Drop(object sender, DragEventArgs e)
 		{
 			NavDrag.Verbose("dnd", e.Effects + " " + e.Data);
 			// MessageBox.Show("{2}\r\n{0}\r\nto\r\n{1}".Arg(_draggingModel, _dropTarget, e.Effects));
-			var eff = GetDropEffects(_draggingModel, _dropTarget, e);
+			var eff = GetDropEffects(_draggingModel, DropTarget, e);
 			if (eff == DragDropEffects.Copy)
 			{
 				_draggingModel.Copy();
-				_dropTarget.PasteChild();
+				DropTarget.PasteChild();
 			}
 			else if (eff == DragDropEffects.Move)
 			{
-				_draggingModel.Cut();
-				_dropTarget.PasteChild();
+				if (DropTarget != null)
+				{
+					_draggingModel.Cut();
+					DropTarget.PasteChild();
+				}
 			}
+			DropTarget = null;
 			// erease clipboard
 			PageViewModel.Copy(null);
 		}
